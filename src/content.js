@@ -53,7 +53,7 @@ function gatherProfileListNames () {
 
 function updateFollowingStatus () {
   browser.runtime.sendMessage({ profileQuery: { username: profileName, target_user: whoAmI } }).then((response) => {
-    if (response.following === true) {
+    if (response && response.following === true) {
       const nicknameNode = document.querySelector('.h-card .p-nickname')
       nicknameNode.innerHTML = `${profileName} <span class="label text-uppercase">Follows you</span>`
     }
