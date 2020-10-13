@@ -1,0 +1,10 @@
+{
+    "extension_name": {
+        "message": "GitMututal",
+        "description": "The display name for the extension."
+    },
+    "extension_description": {
+        "message": "GitMututal displays a 'Follows You' label next to use profiles on GitHub.",
+        "description": "Description of what the extension does."
+    }
+}
