@@ -29,11 +29,13 @@ if ((tab === 'following' || tab === 'followers') && whoAmI) {
   const loginList = gatherProfileListNames()
   if (loginList && loginList.length > 0) {
     browser.runtime.sendMessage({ userListQuery: { loginList, targetLogin: whoAmI } }).then((relList) => {
-      const loginNodes = document.querySelectorAll('.page-profile span.link-gray.pl-1')
+      const loginNodes = gatherProfileListNodes()
       const loginNodeMap = {}
       for (const node of loginNodes) {
         loginNodeMap[node.innerText] = node
       }
+
+      console.log(loginNodeMap)
 
       for (const rel of relList.filter(rel => rel.follower)) {
         const node = loginNodeMap[rel.login]
@@ -56,9 +58,13 @@ function getProfileName () {
   }
 }
 
+function gatherProfileListNodes () {
+  return document.querySelectorAll('.page-profile a span.link-gray')
+}
+
 function gatherProfileListNames () {
   try {
-    return Array.from(document.querySelectorAll('.page-profile span.link-gray.pl-1')).map(node => node.innerText)
+    return Array.from(gatherProfileListNodes()).map(node => node.innerText)
   } catch (e) {
     console.warn('Error gathering profile names')
     console.warn(e)

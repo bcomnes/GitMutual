@@ -5,6 +5,8 @@ import { getLoginIndexKey, getRelationKey } from './lib/keys.js'
 
 window.browser = browser
 
+window.update = () => updateAllFollowers([devKey])
+
 /*
   Debug logging
 */

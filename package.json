@@ -44,7 +44,7 @@
     "clean": "rimraf dist/* && mkdirp dist",
     "build": "run-s clean build:*",
     "build:js": "rollup --config rollup.config.js",
-    "build:static": "cpx 'src/**/*.{html,json,png}' dist",
+    "build:static": "cpx 'src/**/*.{html,json,png,css}' dist",
     "watch": "run-s clean && run-p watch:*",
     "watch:js": "npm run build:js -- -w",
     "watch:static": "npm run build:static -- -w",
