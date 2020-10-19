@@ -26,10 +26,24 @@ if (tab === 'followers') console.log(`looking at ${lookingAtSelf ? 'your' : `${p
 if (tab === 'following') console.log(`looking at who ${lookingAtSelf ? 'you' : profileName} follow${lookingAtSelf ? '' : 's'}`)
 
 if ((tab === 'following' || tab === 'followers') && whoAmI) {
-  const userList = gatherProfileListNames()
-  if (userList) {
-    browser.runtime.sendMessage({ userListQuery: { userList, target_user: whoAmI } }).then((response) => {
-      console.log(response)
+  const loginList = gatherProfileListNames()
+  if (loginList && loginList.length > 0) {
+    browser.runtime.sendMessage({ userListQuery: { loginList, targetLogin: whoAmI } }).then((relList) => {
+      const loginNodes = document.querySelectorAll('.page-profile span.link-gray.pl-1')
+      const loginNodeMap = {}
+      for (const node of loginNodes) {
+        loginNodeMap[node.innerText] = node
+      }
+
+      for (const rel of relList.filter(rel => rel.follower)) {
+        const node = loginNodeMap[rel.login]
+        if (node) node.innerHTML = `${rel.login} <span class="Label Label--green text-uppercase">Follows you</span>`
+      }
+
+      for (const rel of relList.filter(rel => rel.unfollower)) {
+        const node = loginNodeMap[rel.login]
+        if (node) node.innerHTML = `${rel.login} <span class="Label Label--red text-uppercase">Unfollowed you</span>`
+      }
     })
   }
 }
@@ -52,10 +66,15 @@ function gatherProfileListNames () {
 }
 
 function updateFollowingStatus () {
-  browser.runtime.sendMessage({ profileQuery: { username: profileName, target_user: whoAmI } }).then((response) => {
-    if (response && response.following === true) {
+  browser.runtime.sendMessage({ profileQuery: { userLogin: profileName, targetLogin: whoAmI } }).then((response) => {
+    if (response && response.follower === true) {
       const nicknameNode = document.querySelector('.h-card .p-nickname')
-      nicknameNode.innerHTML = `${profileName} <span class="label text-uppercase">Follows you</span>`
+      nicknameNode.innerHTML = `${profileName} <span class="Label Label--green text-uppercase">Follows you</span>`
+    }
+
+    if (response && response.unfollower === true) {
+      const nicknameNode = document.querySelector('.h-card .p-nickname')
+      nicknameNode.innerHTML = `${profileName} <span class="Label Label--red text-uppercase">Unfollowed you</span>`
     }
   })
 }

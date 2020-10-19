@@ -37,7 +37,10 @@
 
     "permissions": [
         "https://github.com/*",
-        "https://api.github.com/*"
+        "https://api.github.com/*",
+        "alarms",
+        "storage",
+        "unlimitedStorage"
     ]
 }
 
