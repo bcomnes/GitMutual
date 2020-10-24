@@ -24,7 +24,7 @@
     "npm-run-all2": "^5.0.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.29.0",
-    "standard": "^14.3.4",
+    "standard": "^15.0.0",
     "tap": "^14.10.8"
   },
   "homepage": "https://github.com/bcomnes/GitMutual",
