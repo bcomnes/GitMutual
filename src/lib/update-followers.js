@@ -4,12 +4,14 @@ import { getOldData } from './get-old-data.js'
 import {
   getRelationKey,
   getUserKeyIndexKey,
-  getIdIndexKey
+  getIdIndexKey,
+  LAST_UPDATE,
+  TOKEN_DATA
 } from './keys.js'
 import { splitObject } from './split-object.js'
+import browser from 'webextension-polyfill'
 
 const UPDATE_ALARM = 'periodically-update-followers'
-const LAST_UPDATE = 'last-update'
 const UPDATE_INTERVAL = 12 // hours
 const PERIODIC_UPDATES = true
 
@@ -20,23 +22,27 @@ function getHourOffset (hrs) {
 
 let updating = false
 
-export async function updateAllFollowers (tokens = []) {
+export async function updateAllFollowers () {
   if (updating === true) return null // Already updating
 
   // clear any alarms
   const cleared = browser.alarms.clear(UPDATE_ALARM)
   console.log(cleared ? 'update alarm cleared' : 'no update alarm to clear')
   const updateTime = new Date()
-
   try {
-    for (const token of tokens) {
+    const { [TOKEN_DATA]: tokenData } = await browser.storage.sync.get(TOKEN_DATA)
+    if (!(tokenData && tokenData.token)) {
+      console.log('no token found, skipping update')
+      return null
+    }
+    for (const token of [tokenData.token]) {
       await updateFollowers(token, updateTime)
     }
   } catch (e) {
     console.error(e)
   } finally {
     updating = false
-    await browser.storage.sync.set({ [LAST_UPDATE]: updateTime.toISOString() })
+    await browser.storage.local.set({ [LAST_UPDATE]: updateTime.toISOString() })
     if (PERIODIC_UPDATES) {
       // Set the next time to update
       browser.alarms.create(UPDATE_ALARM, { when: getHourOffset(UPDATE_INTERVAL) })

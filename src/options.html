@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GitMutual | Options</title>
+  <script type="module" src="options.js"></script>
+</head>
+<body>
+  <div>
+    <h2>Stats</h2>
+    <dt>Last Update</dt>
+    <dd id='last-update'>loading...</dd>
+  </div>
+  <div>
+    <h2>Options</h2>
+    <form id='options-form'>
+      <fieldset>
+        <legend>Auth</legend>
+        <div>
+          <label>API Token:
+            <input name="token" autoCorrect="off" autoCapitalize="none" type="text">
+          </label>
+        </div>
+        <div>
+          <dt>Token Username</dt>
+          <dd id='token-login'>loading...</dd>
+          <dt>Token Email</dt>
+          <dd id='token-email'>loading...</dd>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Data Updates:</legend>
+        <div>
+          <label>Automatic Data Updates:
+            <input name="automaticDataUpdate" type="checkbox">
+          </label>
+        </div>
+        <div>
+          <label>Update interval (in hours):
+            <input name="updateInterval" type="number" min="0" step="1">
+          </label>
+        </div>
+      </fieldset>
+    </form>
+
+    <div id="status"></div>
+    <button id="save">Save</button>
+    <button id="reset">Reset</button>
+    <button id="update">Refresh Data</button>
+  </div>
+</body>
+</html>

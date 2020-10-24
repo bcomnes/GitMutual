@@ -1,5 +1,8 @@
 import browser from 'webextension-polyfill'
 
-console.log('Hello World!', browser)
+async function openSettings () {
+  await browser.runtime.openOptionsPage()
+  console.log('options opened')
+}
 
-console.log(browser)
+document.getElementById('options-button').addEventListener('click', openSettings)

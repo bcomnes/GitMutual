@@ -1,11 +1,10 @@
 import browser from 'webextension-polyfill'
-import devKey from './devKey.js'
 import { updateAllFollowers } from './lib/update-followers.js'
 import { getLoginIndexKey, getRelationKey } from './lib/keys.js'
 
 window.browser = browser
 
-window.update = () => updateAllFollowers([devKey])
+window.update = () => updateAllFollowers()
 
 /*
   Debug logging
@@ -64,6 +63,19 @@ browser.runtime.onMessage.addListener((request, sender) => {
 
 browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
   console.log('starting update')
-  await updateAllFollowers([devKey])
+  await updateAllFollowers()
   console.log('finished update')
+})
+
+browser.runtime.onMessage.addListener((request, sender) => {
+  if (request.updateData) {
+    return (async () => {
+      try {
+        await updateAllFollowers()
+        return true
+      } catch (e) {
+        return false
+      }
+    })().catch(console.error)
+  }
 })
