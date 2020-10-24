@@ -48,11 +48,13 @@ async function saveSettings () {
 
   // TODO: validate token
   await browser.storage.sync.set({
-    [TOKEN_DATA]: token ? {
-      token: optionsForm.token.value,
-      email: 'foo@bar.com',
-      login: 'foobar'
-    } : null,
+    [TOKEN_DATA]: token
+      ? {
+          token: optionsForm.token.value,
+          email: 'foo@bar.com',
+          login: 'foobar'
+        }
+      : null,
     [AUTOMATIC_DATA_UPDATE]: optionsForm.automaticDataUpdate.checked,
     [UPDATE_INTERVAL]: optionsForm.updateInterval.value
   })
