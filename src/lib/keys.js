@@ -27,3 +27,12 @@ export function getStatsKey (statsKey) {
 }
 
 export const LAST_UPDATE = getStatsKey('last-update')
+export const UPDATE_IN_PROGRESS = getStatsKey('update-in-progress')
+export const NEXT_UPDATE = getStatsKey('next-update')
+export const LAST_UPDATE_ERROR = getStatsKey('last-update-error')
+
+export function getAlarmKey (alarmKey) {
+  return `alarm:${alarmKey}`
+}
+
+export const UPDATE_ALARM = getAlarmKey('auto-data-updates')

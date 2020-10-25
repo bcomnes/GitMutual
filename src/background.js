@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill'
 import { updateAllFollowers } from './lib/update-followers.js'
-import { getLoginIndexKey, getRelationKey } from './lib/keys.js'
+import { getLoginIndexKey, getRelationKey, UPDATE_IN_PROGRESS, UPDATE_ALARM } from './lib/keys.js'
 
 window.browser = browser
 
@@ -63,6 +63,8 @@ browser.runtime.onMessage.addListener((request, sender) => {
 
 browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
   console.log('starting update')
+  // reset any bugged in-progress-update state
+  await browser.storage.local.set({ [UPDATE_IN_PROGRESS]: false })
   await updateAllFollowers()
   console.log('finished update')
 })
@@ -70,12 +72,23 @@ browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
 browser.runtime.onMessage.addListener((request, sender) => {
   if (request.updateData) {
     return (async () => {
-      try {
-        await updateAllFollowers()
-        return true
-      } catch (e) {
-        return false
-      }
+      await updateAllFollowers()
     })().catch(console.error)
   }
 })
+
+async function autoUpdateListener (alarm) {
+  if (alarm.name === UPDATE_ALARM) {
+    try {
+      console.log('scheduled auto update triggered update')
+      await updateAllFollowers()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+}
+
+if (!browser.alarms.onAlarm.hasListener(autoUpdateListener)) {
+  console.log('adding alarm listener')
+  browser.alarms.onAlarm.addListener(autoUpdateListener)
+}

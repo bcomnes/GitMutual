@@ -6,46 +6,75 @@ import {
   getUserKeyIndexKey,
   getIdIndexKey,
   LAST_UPDATE,
-  TOKEN_DATA
+  NEXT_UPDATE,
+  UPDATE_IN_PROGRESS,
+  LAST_UPDATE_ERROR,
+  TOKEN_DATA,
+  UPDATE_ALARM,
+  AUTOMATIC_DATA_UPDATE,
+  UPDATE_INTERVAL
 } from './keys.js'
 import { splitObject } from './split-object.js'
 import browser from 'webextension-polyfill'
-
-const UPDATE_ALARM = 'periodically-update-followers'
-const UPDATE_INTERVAL = 12 // hours
-const PERIODIC_UPDATES = true
-
-function getHourOffset (hrs) {
-  const dt = new Date()
-  return dt.setHours(dt.getHours() + hrs)
-}
-
-let updating = false
+import { getHourOffset } from './get-hour-offset.js'
 
 export async function updateAllFollowers () {
-  if (updating === true) return null // Already updating
+  const { [UPDATE_IN_PROGRESS]: updateInProgress } = await browser.storage.local.get({ [UPDATE_IN_PROGRESS]: false })
+  if (updateInProgress === true) {
+    console.log('update skipping: an update is already in progress')
+    return
+  }
 
+  await browser.storage.local.set({ [UPDATE_IN_PROGRESS]: true })
   // clear any alarms
   const cleared = browser.alarms.clear(UPDATE_ALARM)
   console.log(cleared ? 'update alarm cleared' : 'no update alarm to clear')
+
   const updateTime = new Date()
+
   try {
     const { [TOKEN_DATA]: tokenData } = await browser.storage.sync.get(TOKEN_DATA)
     if (!(tokenData && tokenData.token)) {
       console.log('no token found, skipping update')
       return null
     }
-    for (const token of [tokenData.token]) {
+
+    for (const token of [tokenData.token]) { // The idea was to maybe support multi-login
       await updateFollowers(token, updateTime)
     }
+
+    await browser.storage.local.set({
+      [LAST_UPDATE_ERROR]: {
+        message: null,
+        timestamp: null
+      }
+    })
+    await browser.storage.local.set({ [LAST_UPDATE]: updateTime.toISOString() })
   } catch (e) {
     console.error(e)
+    await browser.storage.local.set({
+      [LAST_UPDATE_ERROR]: {
+        message: e.message,
+        timestamp: updateTime.toISOString()
+      }
+    })
   } finally {
-    updating = false
-    await browser.storage.local.set({ [LAST_UPDATE]: updateTime.toISOString() })
-    if (PERIODIC_UPDATES) {
+    await browser.storage.local.set({ [UPDATE_IN_PROGRESS]: false })
+    const {
+      [AUTOMATIC_DATA_UPDATE]: automaticDataUpdate,
+      [UPDATE_INTERVAL]: updateInterval
+    } = await browser.storage.sync.get({
+      [AUTOMATIC_DATA_UPDATE]: true,
+      [UPDATE_INTERVAL]: 12
+    })
+    if (automaticDataUpdate) {
+      const nextUpdate = getHourOffset(updateInterval, updateTime.toISOString())
       // Set the next time to update
-      browser.alarms.create(UPDATE_ALARM, { when: getHourOffset(UPDATE_INTERVAL) })
+      browser.alarms.create(UPDATE_ALARM, { when: nextUpdate.valueOf() })
+      await browser.storage.local.set({ [NEXT_UPDATE]: nextUpdate.toISOString() })
+      console.log(`New alarm set for ${nextUpdate.toLocaleString()}`)
+    } else {
+      await browser.storage.local.set({ [NEXT_UPDATE]: null })
     }
   }
 }
@@ -146,8 +175,8 @@ async function updateFollowers (token, updateTime) {
 
   try {
     const splitIdIndex = splitObject(idIndex, 50)
-    for (const ii of splitIdIndex) {
-      await browser.storage.local.set(ii)
+    for (const id of splitIdIndex) {
+      await browser.storage.local.set(id)
     }
   } catch (e) {
     console.error(e)

@@ -1,0 +1,26 @@
+@import 'mine.css';
+@import 'mine.css/dist/layout.css';
+
+h2.top {
+  margin-top: 0;
+}
+
+h2 {
+  margin-top: 0.5em;
+  margin-bottom: 0.25em;
+}
+
+.mine-layout {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+label, input {
+  display: block;
+}
+
+input[type='text'],
+input[type='text'] {
+  width: 100%
+}
+
