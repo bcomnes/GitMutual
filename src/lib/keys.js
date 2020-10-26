@@ -1,3 +1,7 @@
+import pkg from '../../package.json'
+
+export const userAgent = `GitMutual ${pkg.version}`
+
 export function getRelationKey (targetId, userId) {
   return `rel:${targetId}:${userId}`
 }
@@ -30,6 +34,7 @@ export const LAST_UPDATE = getStatsKey('last-update')
 export const UPDATE_IN_PROGRESS = getStatsKey('update-in-progress')
 export const NEXT_UPDATE = getStatsKey('next-update')
 export const LAST_UPDATE_ERROR = getStatsKey('last-update-error')
+export const LAST_LOGIN = getStatsKey('last-login')
 
 export function getAlarmKey (alarmKey) {
   return `alarm:${alarmKey}`

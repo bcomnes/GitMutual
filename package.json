@@ -56,11 +56,13 @@
     "build:static": "cpx 'src/**/*.{html,json,png}' dist",
     "build:css-options": "postcss src/options.css -o dist/options.css",
     "build:css-popup": "postcss src/popup.css -o dist/popup.css",
+    "build:css-unfollowers": "postcss src/unfollowers.css -o dist/unfollowers.css",
     "watch": "run-s clean && run-p watch:*",
     "watch:js": "npm run build:js -- -w --no-watch.clearScreen",
     "watch:static": "npm run build:static -- -w",
     "watch:css-options": "npm run build:css-options -- -w",
     "watch:css-popup": "npm run build:css-popup -- -w",
+    "watch:css-unfollowers": "npm run build:css-unfollowers -- -w",
     "start": "npm run watch"
   },
   "standard": {

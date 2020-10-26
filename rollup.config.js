@@ -14,7 +14,7 @@ const OUTPUT_DIR = 'dist'
 
 export default [
   {
-    input: ['src/background.js', 'src/popup.js', 'src/options.js'],
+    input: ['src/background.js', 'src/popup.js', 'src/options.js', 'src/unfollowers.js'],
     plugins: plugins(),
     output: {
       dir: OUTPUT_DIR,

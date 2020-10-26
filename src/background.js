@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill'
 import { updateAllFollowers } from './lib/update-followers.js'
-import { getLoginIndexKey, getRelationKey, UPDATE_IN_PROGRESS, UPDATE_ALARM } from './lib/keys.js'
+import { getLoginIndexKey, getRelationKey, LAST_LOGIN, UPDATE_IN_PROGRESS, UPDATE_ALARM } from './lib/keys.js'
 
 window.browser = browser
 
@@ -32,7 +32,7 @@ browser.runtime.onMessage.addListener((request, sender) => {
       const relationhipKey = getRelationKey(targetId, userId)
 
       const { [relationhipKey]: relationship } = await browser.storage.local.get(getRelationKey(targetId, userId))
-
+      await browser.storage.local.set({ [LAST_LOGIN]: targetLogin })
       return { login: userLogin, ...relationship }
     })().catch(console.error)
   }
@@ -55,7 +55,7 @@ browser.runtime.onMessage.addListener((request, sender) => {
       const relationshipKeyList = Object.values(idMap).filter(id => !!id).map(userId => getRelationKey(targetId, userId))
 
       const relationshipList = await browser.storage.local.get(relationshipKeyList)
-
+      await browser.storage.local.set({ [LAST_LOGIN]: targetLogin })
       return Object.values(relationshipList)
     })().catch(console.error)
   }

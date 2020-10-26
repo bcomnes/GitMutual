@@ -19,8 +19,13 @@ label, input {
   display: block;
 }
 
+input[type='submit'],
+input[type='reset'] {
+  display: inline;
+}
+
 input[type='text'],
-input[type='text'] {
-  width: 100%
+input[type='number'] {
+  width: 100%;
 }
 

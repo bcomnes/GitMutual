@@ -2,6 +2,7 @@ import { Octokit } from '@octokit/rest'
 import { getCurrentData } from './get-current-data.js'
 import { getOldData } from './get-old-data.js'
 import {
+  userAgent,
   getRelationKey,
   getUserKeyIndexKey,
   getIdIndexKey,
@@ -25,6 +26,12 @@ export async function updateAllFollowers () {
     return
   }
 
+  const { [TOKEN_DATA]: tokenData } = await browser.storage.sync.get(TOKEN_DATA)
+  if (!(tokenData && tokenData.token)) {
+    console.log('no token found, skipping update')
+    return null
+  }
+
   await browser.storage.local.set({ [UPDATE_IN_PROGRESS]: true })
   // clear any alarms
   const cleared = browser.alarms.clear(UPDATE_ALARM)
@@ -33,12 +40,6 @@ export async function updateAllFollowers () {
   const updateTime = new Date()
 
   try {
-    const { [TOKEN_DATA]: tokenData } = await browser.storage.sync.get(TOKEN_DATA)
-    if (!(tokenData && tokenData.token)) {
-      console.log('no token found, skipping update')
-      return null
-    }
-
     for (const token of [tokenData.token]) { // The idea was to maybe support multi-login
       await updateFollowers(token, updateTime)
     }
@@ -80,7 +81,7 @@ export async function updateAllFollowers () {
 }
 
 async function updateFollowers (token, updateTime) {
-  const octokit = new Octokit({ auth: token, userAgent: 'GitMutual' })
+  const octokit = new Octokit({ auth: token, userAgent })
   const { data: currentUser } = await octokit.users.getAuthenticated()
   const { id: targetId } = currentUser
   const [

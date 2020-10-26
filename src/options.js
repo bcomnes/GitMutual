@@ -7,13 +7,17 @@ import {
   LAST_UPDATE,
   NEXT_UPDATE,
   LAST_UPDATE_ERROR,
-  UPDATE_ALARM
+  UPDATE_ALARM,
+  userAgent
 } from './lib/keys.js'
 import { getHourOffset } from './lib/get-hour-offset.js'
+import { Octokit } from '@octokit/rest'
 
 document.addEventListener('DOMContentLoaded', restoreOptions)
 document.getElementById('reset').addEventListener('click', restoreOptions)
-async function restoreOptions () {
+async function restoreOptions (ev) {
+  if (ev) ev.preventDefault()
+
   document.querySelector('#status').innerText = 'Restoring settings...'
   const {
     [LAST_UPDATE]: lastUpdate,
@@ -52,30 +56,58 @@ async function restoreOptions () {
   optionsForm.token.value = tokenData ? tokenData.token : ''
 
   document.querySelector('#token-login').innerText = tokenData ? tokenData.login : ''
-  document.querySelector('#token-email').innerText = tokenData ? tokenData.email : ''
+  document.querySelector('#token-id').innerText = tokenData ? tokenData.id : ''
   document.querySelector('#status').innerText = 'Settings restored.'
 }
 
 document.getElementById('save').addEventListener('click', saveSettings)
-async function saveSettings () {
+async function saveSettings (ev) {
+  if (ev) ev.preventDefault()
   const optionsForm = document.querySelector('#options-form')
   try {
     optionsForm.disabled = true
     document.querySelector('#status').innerText = 'Saving settings...'
     const token = optionsForm.token.value
 
-    // TODO: validate token
-    await browser.storage.sync.set({
-      [TOKEN_DATA]: token
-        ? {
-            token: optionsForm.token.value,
-            email: 'foo@bar.com',
-            login: 'foobar'
-          }
-        : null,
+    const octokit = new Octokit({ auth: token, userAgent })
+
+    document.querySelector('#token-login').innerText = '...'
+    document.querySelector('#token-id').innerText = '...'
+
+    const newSettings = {
       [AUTOMATIC_DATA_UPDATE]: optionsForm.automaticDataUpdate.checked,
       [UPDATE_INTERVAL]: JSON.parse(optionsForm.updateInterval.value)
-    })
+    }
+
+    if (token) {
+      let tokenData
+      try {
+        const { data: currentUser } = await octokit.users.getAuthenticated()
+        console.log(currentUser)
+        tokenData = {
+          token,
+          email: currentUser.email,
+          login: currentUser.login,
+          id: currentUser.id
+        }
+        document.querySelector('#token-login').innerText = tokenData ? tokenData.login : ''
+        document.querySelector('#token-id').innerText = tokenData ? tokenData.id : ''
+        optionsForm.token.setCustomValidity('')
+      } catch (e) {
+        optionsForm.token.setCustomValidity(e.message)
+        document.querySelector('#token-login').innerText = e.message
+      }
+
+      if (tokenData) {
+        newSettings[TOKEN_DATA] = tokenData
+      }
+    } else {
+      newSettings[TOKEN_DATA] = null
+      document.querySelector('#token-login').innerText = ''
+      document.querySelector('#token-id').innerText = ''
+    }
+
+    await browser.storage.sync.set(newSettings)
     document.querySelector('#status').innerText = 'Options saved.'
   } catch (e) {
     console.log(e)
