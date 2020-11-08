@@ -1,4 +1,3 @@
-import browser from 'webextension-polyfill'
 import { updateAllFollowers } from './lib/update-followers.js'
 import { getLoginIndexKey, getRelationKey, LAST_LOGIN, UPDATE_IN_PROGRESS, UPDATE_ALARM } from './lib/keys.js'
 

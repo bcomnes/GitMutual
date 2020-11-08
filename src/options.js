@@ -1,4 +1,3 @@
-import browser from 'webextension-polyfill'
 import {
   AUTOMATIC_DATA_UPDATE,
   UPDATE_INTERVAL,

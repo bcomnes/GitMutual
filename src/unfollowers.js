@@ -1,4 +1,3 @@
-import browser from 'webextension-polyfill'
 import { LAST_LOGIN, getLoginIndexKey, getUserKeyIndexKey } from './lib/keys.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
