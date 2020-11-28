@@ -1,11 +1,11 @@
 import { Component, html, useState, useEffect } from 'uland'
-import css from 'plain-tag'
 import {
   AUTOMATIC_DATA_UPDATE,
   UPDATE_IN_PROGRESS,
   LAST_UPDATE,
   NEXT_UPDATE,
-  LAST_UPDATE_ERROR
+  LAST_UPDATE_ERROR,
+  TOKEN_DATA
 } from '../lib/keys.js'
 
 export const Stats = Component(() => {
@@ -14,6 +14,7 @@ export const Stats = Component(() => {
   const [updateInProgress, setUpdateInProgress] = useState(null)
   const [nextUpdate, setNextUpdate] = useState(null)
   const [automaticDataUpdate, setAutomaticDataUpdate] = useState(null)
+  const [tokenData, setTokenData] = useState(null)
 
   useEffect(() => {
     const getInitialStats = async () => {
@@ -33,9 +34,11 @@ export const Stats = Component(() => {
       })
 
       const {
-        [AUTOMATIC_DATA_UPDATE]: automaticDataUpdate
+        [AUTOMATIC_DATA_UPDATE]: automaticDataUpdate,
+        [TOKEN_DATA]: tokenData
       } = await browser.storage.sync.get({
-        [AUTOMATIC_DATA_UPDATE]: true
+        [AUTOMATIC_DATA_UPDATE]: true,
+        [TOKEN_DATA]: null
       })
 
       setLastUpdate(lastUpdate)
@@ -43,11 +46,12 @@ export const Stats = Component(() => {
       setUpdateInProgress(updateInProgress)
       setLastUpdateError(lastUpdateError)
       setAutomaticDataUpdate(automaticDataUpdate)
+      setTokenData(tokenData)
 
       browser.storage.onChanged.addListener(storageListener)
     }
 
-    const storageListener = async (changes, areaName) => {
+    const storageListener = (changes, areaName) => {
       if (areaName === 'local' && changes[UPDATE_IN_PROGRESS]) {
         setUpdateInProgress(changes[UPDATE_IN_PROGRESS].newValue)
       }
@@ -67,19 +71,27 @@ export const Stats = Component(() => {
       if (areaName === 'sync' && changes[AUTOMATIC_DATA_UPDATE]) {
         setAutomaticDataUpdate(changes[AUTOMATIC_DATA_UPDATE].newValue)
       }
+
+      if (areaName === 'sync' && changes[TOKEN_DATA]) {
+        setTokenData(changes[TOKEN_DATA].newValue)
+      }
     }
 
     getInitialStats()
 
     return () => {
-      browser.storage.onChanged.remove(storageListener)
+      browser.storage.onChanged.removeListener(storageListener)
     }
   },
   [])
 
+  function handleUpdate (ev) {
+    ev.preventDefault()
+    browser.runtime.sendMessage({ updateData: true })
+  }
+
   return html`
-  <div class="options">
-    <h2>Stats</h2>
+  <div>
     <dl>
       <dt>Last Update</dt>
       <dd>
@@ -87,7 +99,7 @@ export const Stats = Component(() => {
             ${updateInProgress
               ? 'In progress...'
               : lastUpdate
-                ? lastUpdate.toLocalString()
+                ? new Date(lastUpdate).toLocaleString()
                 : 'loading...'
             }
           </span>
@@ -104,20 +116,15 @@ export const Stats = Component(() => {
       <dd id="next-update">
         ${updateInProgress
             ? 'In progress...'
-            : !automaticDataUpdate
+            : (!automaticDataUpdate || !tokenData)
               ? 'Not scheduled.'
               : nextUpdate
-                ? nextUpdate.toLocalString()
+                ? new Date(nextUpdate).toLocaleString()
                 : 'loading...'
           }
       </dd>
     </dl>
+    <button onclick=${handleUpdate} disabled=${(updateInProgress || !tokenData) ? '' : null}>Update Now</button>
   </div>
   `
 })
-
-// Append style
-const style = css`
-
-`
-document.head.appendChild(document.createElement('style')).textContent(style)

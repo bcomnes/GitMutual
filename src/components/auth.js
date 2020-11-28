@@ -1,19 +1,18 @@
-import { Component, html, useState, useRef, useEffect } from 'uland'
-import css from 'plain-tag'
+/* eslint-env browser */
+import { Component, html, useState, useEffect } from 'uland'
 import {
-  TOKEN_DATA,
-  userAgent
+  TOKEN_DATA
 } from '../lib/keys.js'
-import { Octokit } from '@octokit/rest'
+import { getDeviceCode, pollDeviceCode } from '../lib/device-flow-auth.js'
 
 export const Auth = Component(() => {
-  const [tokenData, setTokenData] = useState({})
+  const [tokenData, setTokenData] = useState(null)
+  const [authSession, setAuthSession] = useState(null)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
-  const tokenRef = useRef()
 
   useEffect(() => {
-    const getInitialStats = async () => {
+    async function getInitialStats () {
       const {
         [TOKEN_DATA]: tokenData
       } = await browser.storage.sync.get({
@@ -21,11 +20,10 @@ export const Auth = Component(() => {
       })
 
       setTokenData(tokenData)
-
       browser.storage.onChanged.addListener(storageListener)
     }
 
-    const storageListener = async (changes, areaName) => {
+    function storageListener (changes, areaName) {
       if (areaName === 'sync' && changes[TOKEN_DATA]) {
         setTokenData(changes[TOKEN_DATA].newValue)
       }
@@ -34,69 +32,103 @@ export const Auth = Component(() => {
     getInitialStats()
 
     return () => {
-      browser.storage.onChanged.remove(storageListener)
+      browser.storage.onChanged.removeListener(storageListener)
     }
-  },
-  [])
+  }, [])
 
-  async function handleSave (ev) {
+  async function handleLogOut (ev) {
     if (ev) ev.preventDefault()
-    const newSettings = {}
-    console.log(ev.currentTarget)
-    return
+    await browser.storage.sync.set({
+      [TOKEN_DATA]: null
+    })
+  }
+
+  async function handleLogInInit (ev) {
+    if (ev) ev.preventDefault()
+    setSubmitting(true)
+    setError(null)
+
     try {
-      setSubmitting(true)
-      const token = tokenRef.current.value
+      const deviceCode = await getDeviceCode()
+      setAuthSession({
+        verificationUri: deviceCode.verification_uri,
+        userCode: deviceCode.user_code
+      })
 
-      if (token) {
-        const octokit = new Octokit({ auth: token, userAgent })
-        const { data: currentUser } = await octokit.users.getAuthenticated()
-        const tokenData = {
-          token,
-          email: currentUser.email,
-          login: currentUser.login,
-          id: currentUser.id
-        }
-        newSettings[TOKEN_DATA] = tokenData
-      } else {
-        newSettings[TOKEN_DATA] = null
-      }
+      const tokenData = await pollDeviceCode(deviceCode)
 
-      await browser.storage.sync.set(newSettings)
+      await browser.storage.sync.set({
+        [TOKEN_DATA]: tokenData
+      })
     } catch (e) {
       console.log(e)
+      setError(e)
     } finally {
       setSubmitting(false)
+      setAuthSession(null)
     }
   }
 
   return html`
-  <form onsubmit="${handleSave}">
-    <fieldset disabled=${submitting}>
-      <legend>Auth</legend>
-      <div>
-        <label>API Token:
-          <input ref="${tokenRef}" name="token" autoCorrect="off" autoCapitalize="none" type="text" .value=${tokenData.token} >
-        </label>
-      </div>
-      <dl>
-        <dt>Token Username</dt>
-        <dd id="token-login">
-          ${tokenData.token}
-        </dd>
-        <dt>Token ID</dt>
-        <dd id="token-id">
-          ${tokenData.id}
-        </dd>
-      </dl>
-    </fieldset>
-    <input type="submit" value="save">
-  </form>
+    <div>
+      ${tokenData
+        ? html`
+          <form onsubmit="${handleLogOut}">
+            <fieldset disabled="${submitting ? '' : null}">
+              <legend>GitHub Auth</legend>
+              <div>GitMutual authorized with GitHub.</div>
+              <dl>
+                <dt>Token Username</dt>
+                <dd>
+                  ${tokenData.login}
+                </dd>
+                <dt>Token ID</dt>
+                <dd>
+                  ${tokenData.id}
+                </dd>
+              </dl>
+              <input type="submit" value="Log out">
+            </fieldset>
+          </form>
+        `
+        : null}
+
+      ${(!tokenData && !authSession)
+        ? html`
+          <form onsubmit="${handleLogInInit}">
+            <fieldset disabled="${submitting ? '' : null}">
+              <legend>GitHub Auth</legend>
+              <div>GitMutual needs to authoize with GitHub to monitor followig/follower data.</div>
+              <input type="submit" value="Log in to GitHub">
+            </fieldset>
+          </form>
+        `
+        : null
+      }
+
+      ${!tokenData && authSession
+        ? html`
+          <form>
+            <fieldset disabled="${submitting ? '' : null}">
+              <legend>GitHub Auth</legend>
+              <div>Authorize with Github by opening this URL in a browser:</div>
+              <div>
+                <a href="${authSession.verificationUri}" target="_blank">
+                    ${authSession.verificationUri}
+                </a>
+              </div>
+              <div>and enter the following User Code:</div>
+              <div>
+                <code>
+                  ${authSession.userCode}
+                </code>
+              </div>
+            </fieldset>
+          </form>
+        `
+        : null}
+
+      ${error ? html`<div>${error.message}</div>` : null}
+    </div>
   `
 })
-
-// Append style
-const style = css`
-
-`
-document.head.appendChild(document.createElement('style')).textContent(style)

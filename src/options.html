@@ -2,58 +2,28 @@
 <html>
 <head>
   <title>GitMutual | Options</title>
-  <script type="module" src="./conditional-polyfills.js"></script>
+  <script type="module" src="./polyfills/conditional-polyfills.js"></script>
   <script type="module" src="./options.js"></script>
   <link rel="stylesheet" href="options.css">
 </head>
 <body class="safe-area-inset">
-  <div class="mine-layout">
-    <div>
-      <h2>Stats</h2>
-      <dl>
-        <dt>Last Update</dt>
-        <dd><span id="last-update">loading...</span><span id="last-update-error"></span></dd>
-        <dt>Next Update</dt>
-        <dd id="next-update">...loading</dd>
-      </dl>
-    </div>
-    <div>
-      <h2 class="top">Options</h2>
-      <form id="options-form">
-        <fieldset>
-          <legend>Auth</legend>
-          <div>
-            <label>API Token:
-              <input name="token" autoCorrect="off" autoCapitalize="none" type="text">
-            </label>
-          </div>
-          <dl>
-            <dt>Token Username</dt>
-            <dd id='token-login'>loading...</dd>
-            <dt>Token ID</dt>
-            <dd id='token-id'>loading...</dd>
-          </dl>
-        </fieldset>
-        <fieldset>
-          <legend>Data Updates:</legend>
-          <div>
-            <label>Automatic Data Updates:
-              <input id="automatic-update-checkbox" name="automaticDataUpdate" type="checkbox">
-            </label>
-          </div>
-          <div>
-            <label>Update interval (in hours):
-              <input id="update-interval-field" name="updateInterval" type="number" min="0" step="1">
-            </label>
-          </div>
-        </fieldset>
-      </form>
+  <div class="mine-layout gm-options-page">
 
-      <div id="status"></div>
-      <button id="save">Save</button>
-      <button id="reset">Reset</button>
-      <button id="update">Refresh Data</button>
+    <h2>Stats</h2>
+    <div class="gm-options-stats">
+      loading...
     </div>
+
+    <h2>Options</h2>
+
+    <div class="gm-options-auth">
+        loading...
+    </div>
+
+    <div class="gm-options-settings">
+      loading...
+    </div>
+
   </div>
 </body>
 </html>

@@ -1,17 +1,10 @@
-import { Component, html, useState, useRef, useEffect } from 'uland'
+import { Component, html, useState, useEffect } from 'uland'
 import {
   AUTOMATIC_DATA_UPDATE,
-  UPDATE_INTERVAL,
-  TOKEN_DATA,
-  UPDATE_IN_PROGRESS,
-  LAST_UPDATE,
-  NEXT_UPDATE,
-  LAST_UPDATE_ERROR,
-  UPDATE_ALARM,
-  userAgent
-} from './lib/keys.js'
+  UPDATE_INTERVAL
+} from '../lib/keys.js'
 
-export const Options = Component(() => {
+export const Settings = Component(() => {
   const [automaticDataUpdate, setAutomaticDataUpdate] = useState({})
   const [updateInterval, setUpdateInterval] = useState(12)
   const [submitting, setSubmitting] = useState(false)
@@ -33,44 +26,65 @@ export const Options = Component(() => {
       browser.storage.onChanged.addListener(storageListener)
     }
 
-    async function storageListener (changes, areaName) {
+    function storageListener (changes, areaName) {
       if (areaName === 'sync' && changes[UPDATE_INTERVAL]) {
         setUpdateInterval(changes[UPDATE_INTERVAL].newValue)
       }
 
       if (areaName === 'sync' && changes[AUTOMATIC_DATA_UPDATE]) {
-        setUpdateInterval(changes[AUTOMATIC_DATA_UPDATE].newValue)
+        setAutomaticDataUpdate(changes[AUTOMATIC_DATA_UPDATE].newValue)
       }
     }
 
     getInitialState()
 
     return () => {
-      browser.storage.onChanged.remove(storageListener)
+      browser.storage.onChanged.removeListener(storageListener)
     }
-  })
+  }, [])
 
-  function handleSave (ev) {
+  async function handleSave (ev) {
     ev.preventDefault()
-    console.log(ev.currentTarget)
+
+    setSubmitting(true)
+    setError(null)
+
+    try {
+      const newSettings = {
+        [UPDATE_INTERVAL]: ev.currentTarget.updateInterval.valueAsNumber,
+        [AUTOMATIC_DATA_UPDATE]: ev.currentTarget.automaticDataUpdate.checked
+      }
+
+      await browser.storage.sync.set(newSettings)
+    } catch (e) {
+      console.error(e)
+      setError(e)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return html`
   <form onsubmit="${handleSave}">
-    <fieldset disabled="${submitting}">
-      <legend>Data Updates:</legend>
+    <fieldset disabled="${submitting ? '' : null}">
+      <legend>Update schedule:</legend>
       <div>
         <label>Automatic Data Updates:
-          <input name="automaticDataUpdate" type="checkbox" .value="${automaticDataUpdate}">
+          <input name="automaticDataUpdate" type="checkbox" checked=${automaticDataUpdate ? '' : null}>
         </label>
       </div>
       <div>
         <label>Update interval (in hours):
-          <input name="updateInterval" type="number" min="0" step="1" .value="${updateInterval}">
+          <input name="updateInterval" type="number" min="0" step="1" value=${updateInterval}>
         </label>
       </div>
+      <input
+        type="submit"
+        value="${submitting ? 'Saving...' : 'Save'}"
+        style="margin-top: 1em;"
+      >
+      <div>${error ? error.message : null}</div>
     </fieldset>
-    <input type="submit" value="Save">
   </form>
   `
 })

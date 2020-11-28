@@ -12,7 +12,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log('Received request: ', request)
 })
 
-const whoAmI = document.querySelector('a strong.css-truncate-target').innerText
+const whoAmI = document.querySelector('header.Header summary.Header-link img.avatar').alt.split('@')[1]
 
 console.log(`Logged in as ${whoAmI}`)
 

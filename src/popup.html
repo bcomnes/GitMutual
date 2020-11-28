@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="popup.css">
-    <script type="module" src="./conditional-polyfills.js"></script>
+    <script type="module" src="./polyfills/conditional-polyfills.js"></script>
     <script type="module" src="./popup.js"></script>
 </head>
 <body>
-    <strong>Hello World!</strong>
-    <button id="options-button">Options</button>
-    <button id="unfollowers-button">Unfollowers</button>
+    <div class="popup-container">
+      <div>GitMutual</div>
+      <div id="popup-component">Loading...</div>
+    </div>
 </body>
 </html>

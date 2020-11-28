@@ -1,5 +1,17 @@
 import { updateAllFollowers } from './lib/update-followers.js'
-import { getLoginIndexKey, getRelationKey, LAST_LOGIN, UPDATE_IN_PROGRESS, UPDATE_ALARM } from './lib/keys.js'
+import {
+  getLoginIndexKey,
+  getRelationKey,
+  LAST_LOGIN,
+  AUTOMATIC_DATA_UPDATE,
+  UPDATE_INTERVAL,
+  UPDATE_IN_PROGRESS,
+  LAST_UPDATE,
+  NEXT_UPDATE,
+  UPDATE_ALARM,
+  TOKEN_DATA
+} from './lib/keys.js'
+import { getHourOffset } from './lib/get-hour-offset.js'
 
 window.browser = browser
 
@@ -91,3 +103,46 @@ if (!browser.alarms.onAlarm.hasListener(autoUpdateListener)) {
   console.log('adding alarm listener')
   browser.alarms.onAlarm.addListener(autoUpdateListener)
 }
+
+browser.storage.onChanged.addListener(async (changes, areaName) => {
+  if (areaName === 'sync' && changes[UPDATE_INTERVAL]) {
+    const { [AUTOMATIC_DATA_UPDATE]: automaticDataUpdate } = await browser.storage.sync.get(AUTOMATIC_DATA_UPDATE)
+    if (automaticDataUpdate) {
+      browser.alarms.clear(UPDATE_ALARM)
+      const { [LAST_UPDATE]: lastUpdate } = await browser.storage.local.get(LAST_UPDATE)
+      const nextUpdate = getHourOffset(changes[UPDATE_INTERVAL].newValue, lastUpdate)
+      browser.alarms.create(UPDATE_ALARM, { when: nextUpdate.valueOf() })
+      await browser.storage.local.set({ [NEXT_UPDATE]: nextUpdate.toISOString() })
+    }
+  }
+
+  if (areaName === 'sync' && changes[AUTOMATIC_DATA_UPDATE]) {
+    if (changes[AUTOMATIC_DATA_UPDATE].newValue === true) {
+      browser.alarms.clear(UPDATE_ALARM)
+      const { [LAST_UPDATE]: lastUpdate } = await browser.storage.local.get(LAST_UPDATE)
+      const { [UPDATE_INTERVAL]: updateInterval } = await browser.storage.sync.get(UPDATE_INTERVAL)
+      const nextUpdate = getHourOffset(updateInterval, lastUpdate)
+      browser.alarms.create(UPDATE_ALARM, { when: nextUpdate.valueOf() })
+      await browser.storage.local.set({ [NEXT_UPDATE]: nextUpdate.toISOString() })
+    } else {
+      browser.alarms.clear(UPDATE_ALARM)
+      await browser.storage.local.set({ [NEXT_UPDATE]: null })
+    }
+  }
+
+  if (areaName === 'sync' && changes[TOKEN_DATA]) {
+    const { [AUTOMATIC_DATA_UPDATE]: automaticDataUpdate, [UPDATE_INTERVAL]: updateInterval } = await browser.storage.sync.get([AUTOMATIC_DATA_UPDATE, UPDATE_INTERVAL])
+    if (automaticDataUpdate) {
+      if (changes[TOKEN_DATA].newValue) {
+        browser.alarms.clear(UPDATE_ALARM)
+        const { [LAST_UPDATE]: lastUpdate } = await browser.storage.local.get([LAST_UPDATE, UPDATE_INTERVAL])
+        const nextUpdate = getHourOffset(updateInterval, lastUpdate)
+        browser.alarms.create(UPDATE_ALARM, { when: nextUpdate.valueOf() })
+        await browser.storage.local.set({ [NEXT_UPDATE]: nextUpdate.toISOString() })
+      } else {
+        browser.alarms.clear(UPDATE_ALARM)
+        await browser.storage.local.set({ [NEXT_UPDATE]: null })
+      }
+    }
+  }
+})

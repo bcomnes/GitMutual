@@ -2,6 +2,8 @@ import pkg from '../../package.json'
 
 export const userAgent = `GitMutual ${pkg.version}`
 
+export const clientId = '5bef52463c33fb866f82'
+
 export function getRelationKey (targetId, userId) {
   return `rel:${targetId}:${userId}`
 }

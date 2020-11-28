@@ -26,7 +26,8 @@ export default [
     plugins: plugins(),
     output: {
       dir: OUTPUT_DIR,
-      format: 'iife'
+      format: 'umd',
+      name: 'gitMutual'
     }
   }
 ]

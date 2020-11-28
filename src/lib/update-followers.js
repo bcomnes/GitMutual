@@ -63,12 +63,14 @@ export async function updateAllFollowers () {
     await browser.storage.local.set({ [UPDATE_IN_PROGRESS]: false })
     const {
       [AUTOMATIC_DATA_UPDATE]: automaticDataUpdate,
-      [UPDATE_INTERVAL]: updateInterval
+      [UPDATE_INTERVAL]: updateInterval,
+      [TOKEN_DATA]: tokenData
     } = await browser.storage.sync.get({
       [AUTOMATIC_DATA_UPDATE]: true,
-      [UPDATE_INTERVAL]: 12
+      [UPDATE_INTERVAL]: 12,
+      [TOKEN_DATA]: null
     })
-    if (automaticDataUpdate) {
+    if (automaticDataUpdate && tokenData) {
       const nextUpdate = getHourOffset(updateInterval, updateTime.toISOString())
       // Set the next time to update
       browser.alarms.create(UPDATE_ALARM, { when: nextUpdate.valueOf() })

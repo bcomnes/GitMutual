@@ -1,14 +1,24 @@
-async function openSettings () {
-  await browser.runtime.openOptionsPage()
-  console.log('options opened')
-}
+import { render, Component, html, useState, useEffect } from 'uland'
 
-document.getElementById('options-button').addEventListener('click', openSettings)
+async function handleUnfollowerOpen (ev) {
+  ev.preventDefault()
 
-async function openUnfollowers () {
   const createData = { url: 'unfollowers.html' }
   await browser.tabs.create(createData)
   console.log('unfollowers.html opened')
 }
 
-document.getElementById('unfollowers-button').addEventListener('click', openUnfollowers)
+export const Popup = Component(() => {
+  return html`
+  <button onclick=${handleUnfollowerOpen}>
+    Unfollowers
+  </button>
+`
+})
+
+const popupMount = document.querySelector('#popup-component')
+render(popupMount, () => html`
+  <div>
+    ${Popup()}
+  </div>
+`)
