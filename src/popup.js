@@ -1,4 +1,4 @@
-import { render, Component, html, useState, useEffect } from 'uland'
+import { render, Component, html } from 'uland'
 
 async function handleUnfollowerOpen (ev) {
   ev.preventDefault()
