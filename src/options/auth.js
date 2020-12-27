@@ -1,40 +1,16 @@
 /* eslint-env browser */
-import { Component, html, useState, useEffect } from 'uland'
+import { Component, html, useState } from 'uland'
 import {
   TOKEN_DATA
 } from '../lib/keys.js'
 import { getDeviceCode, pollDeviceCode } from '../lib/device-flow-auth.js'
+import { useTokenData } from '../hooks/use-token-data.js'
 
 export const Auth = Component(() => {
-  const [tokenData, setTokenData] = useState(null)
   const [authSession, setAuthSession] = useState(null)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
-
-  useEffect(() => {
-    async function getInitialStats () {
-      const {
-        [TOKEN_DATA]: tokenData
-      } = await browser.storage.sync.get({
-        [TOKEN_DATA]: {}
-      })
-
-      setTokenData(tokenData)
-      browser.storage.onChanged.addListener(storageListener)
-    }
-
-    function storageListener (changes, areaName) {
-      if (areaName === 'sync' && changes[TOKEN_DATA]) {
-        setTokenData(changes[TOKEN_DATA].newValue)
-      }
-    }
-
-    getInitialStats()
-
-    return () => {
-      browser.storage.onChanged.removeListener(storageListener)
-    }
-  }, [])
+  const { tokenData } = useTokenData()
 
   async function handleLogOut (ev) {
     if (ev) ev.preventDefault()
