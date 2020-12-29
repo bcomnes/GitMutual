@@ -18,7 +18,8 @@ export default [
     plugins: plugins(),
     output: {
       dir: OUTPUT_DIR,
-      format: 'es'
+      format: 'es',
+      chunkFileNames: '[format]-[name]-[hash].js'
     }
   },
   {

@@ -59,7 +59,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     generate unfollowers list
   */
   if (message.getUnfollowers) {
-    const { loginId } = message
+    const { loginId } = message.getUnfollowers
     return getUnfollowers(loginId)
   }
 })

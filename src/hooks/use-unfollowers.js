@@ -1,5 +1,20 @@
-import { render, Component, html, useState, useEffect } from 'uland'
+import { useState, useEffect } from 'uland'
 
 export function useUnfollowers (tokenData) {
-  const lastLoginUserKeyIndexKey = getUserKeyIndexKey(lastLoginId)
+  const [unfollowers, setUnfollowers] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!tokenData) return null
+
+    async function updateUnfollowers () {
+      const latestUnfollowers = await browser.runtime.sendMessage({ getUnfollowers: { loginId: tokenData.id } })
+      setUnfollowers(latestUnfollowers)
+      setLoading(false)
+    }
+
+    updateUnfollowers()
+  }, [tokenData])
+
+  return { unfollowers, loading }
 }

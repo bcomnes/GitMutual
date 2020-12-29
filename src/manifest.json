@@ -45,6 +45,8 @@
         "alarms",
         "storage",
         "unlimitedStorage"
-    ]
+    ],
+
+    "content_security_policy": "script-src 'self' 'sha256-RWACdigRAw0MmijAnph1444Fv+yuvCV21L87CUdQ4qk='; object-src 'self'"
 }
 

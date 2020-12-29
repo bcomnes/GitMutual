@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="popup.css">
-    <script type="module" src="./polyfills/conditional-polyfills.js"></script>
-    <script type="module" src="./popup.js"></script>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+  <script>
+    if (!window.browser) {
+      document.write('<script src="./polyfills/browser-polyfill.js"><'+'/script>')
+    }
+  </script>
+  <script type="module" src="./popup.js"></script>
 </head>
 <body>
-    <div class="popup-container">
-      <div>GitMutual</div>
-      <div id="popup-component">Loading...</div>
-    </div>
+  <div class="popup-container">
+    <div>GitMutual</div>
+    <div id="popup-component">Loading...</div>
+  </div>
 </body>
 </html>

@@ -1,23 +1,24 @@
 import { render, Component, html } from 'uland'
 import { useTokenData } from './hooks/use-token-data.js'
 import { Stats } from './options/stats.js'
-// import get from 'lodash.get'
+import { useUnfollowers } from './hooks/use-unfollowers.js'
 
 export const Popup = Component(() => {
-  const { tokenData, loading } = useTokenData()
+  const { tokenData, loading: tokenDataLoading } = useTokenData()
+  const { unfollowers, loading: unfollowersLoading } = useUnfollowers(tokenData)
   async function handleUnfollowerOpen (ev) {
     ev.preventDefault()
 
     const createData = { url: 'unfollowers.html' }
     await browser.tabs.create(createData)
-    console.log('unfollowers.html opened')
   }
 
   async function handleOpenOptions (ev) {
     ev.preventDefault()
     await browser.runtime.openOptionsPage()
-    console.log('options opened')
   }
+
+  const loading = (tokenDataLoading || unfollowersLoading)
 
   if (loading) return html`<div>Loading...</div>`
 
@@ -29,9 +30,10 @@ export const Popup = Component(() => {
       </button>
     </div>`
   }
-
+  console.log(unfollowers)
   return html`
   <div>Logged in as: ${tokenData.login}</div>
+  <div>Unfollowers: ${unfollowers.length}</div>
   ${Stats()}
   <button onclick=${handleUnfollowerOpen}>
     Unfollowers
