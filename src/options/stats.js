@@ -1,4 +1,4 @@
-import { Component, html, useState, useEffect } from 'uland'
+import { Component, html } from 'uland'
 import {
   AUTOMATIC_DATA_UPDATE,
   UPDATE_IN_PROGRESS,
@@ -7,83 +7,31 @@ import {
   LAST_UPDATE_ERROR,
   TOKEN_DATA
 } from '../lib/keys.js'
+import { useBrowserData } from '../hooks/use-browser-storage.js'
 
 export const Stats = Component(() => {
-  const [lastUpdate, setLastUpdate] = useState(null)
-  const [lastUpdateError, setLastUpdateError] = useState({ message: '', timestamp: null })
-  const [updateInProgress, setUpdateInProgress] = useState(null)
-  const [nextUpdate, setNextUpdate] = useState(null)
-  const [automaticDataUpdate, setAutomaticDataUpdate] = useState(null)
-  const [tokenData, setTokenData] = useState(null)
+  const {
+    lastUpdate,
+    lastUpdateError,
+    updateInProgress,
+    nextUpdate
+  } = useBrowserData('local', {
+    lastUpdate: LAST_UPDATE,
+    lastUpdateError: {
+      key: LAST_UPDATE_ERROR,
+      default: { message: '', timestamp: null }
+    },
+    updateInProgress: UPDATE_IN_PROGRESS,
+    nextUpdate: NEXT_UPDATE
+  })
 
-  useEffect(() => {
-    const getInitialStats = async () => {
-      const {
-        [LAST_UPDATE]: lastUpdate,
-        [NEXT_UPDATE]: nextUpdate,
-        [UPDATE_IN_PROGRESS]: updateInProgress,
-        [LAST_UPDATE_ERROR]: lastUpdateError
-      } = await browser.storage.local.get({
-        [LAST_UPDATE]: null,
-        [NEXT_UPDATE]: null,
-        [UPDATE_IN_PROGRESS]: false,
-        [LAST_UPDATE_ERROR]: {
-          message: '',
-          timestamp: null
-        }
-      })
-
-      const {
-        [AUTOMATIC_DATA_UPDATE]: automaticDataUpdate,
-        [TOKEN_DATA]: tokenData
-      } = await browser.storage.sync.get({
-        [AUTOMATIC_DATA_UPDATE]: true,
-        [TOKEN_DATA]: null
-      })
-
-      setLastUpdate(lastUpdate)
-      setNextUpdate(nextUpdate)
-      setUpdateInProgress(updateInProgress)
-      setLastUpdateError(lastUpdateError)
-      setAutomaticDataUpdate(automaticDataUpdate)
-      setTokenData(tokenData)
-
-      browser.storage.onChanged.addListener(storageListener)
-    }
-
-    const storageListener = (changes, areaName) => {
-      if (areaName === 'local' && changes[UPDATE_IN_PROGRESS]) {
-        setUpdateInProgress(changes[UPDATE_IN_PROGRESS].newValue)
-      }
-
-      if (areaName === 'local' && changes[LAST_UPDATE]) {
-        setLastUpdate(changes[LAST_UPDATE].newValue)
-      }
-
-      if (areaName === 'local' && changes[NEXT_UPDATE]) {
-        setNextUpdate(changes[NEXT_UPDATE].newValue)
-      }
-
-      if (areaName === 'local' && changes[LAST_UPDATE_ERROR]) {
-        setLastUpdateError(changes[LAST_UPDATE_ERROR].newValue)
-      }
-
-      if (areaName === 'sync' && changes[AUTOMATIC_DATA_UPDATE]) {
-        setAutomaticDataUpdate(changes[AUTOMATIC_DATA_UPDATE].newValue)
-      }
-
-      if (areaName === 'sync' && changes[TOKEN_DATA]) {
-        setTokenData(changes[TOKEN_DATA].newValue)
-      }
-    }
-
-    getInitialStats()
-
-    return () => {
-      browser.storage.onChanged.removeListener(storageListener)
-    }
-  },
-  [])
+  const { automaticDataUpdate, tokenData } = useBrowserData('sync', {
+    automaticDataUpdate: {
+      key: AUTOMATIC_DATA_UPDATE,
+      default: true
+    },
+    tokenData: TOKEN_DATA
+  })
 
   function handleUpdate (ev) {
     ev.preventDefault()
