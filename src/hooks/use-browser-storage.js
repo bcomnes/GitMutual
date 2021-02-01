@@ -12,17 +12,13 @@ export function useBrowserData (namespace, keys = {}) {
   const [loading, setLoading] = useState(true)
 
   const states = createStates(keys)
-  debugger
   useEffect(() => {
     const storageListener = createListener(namespace, states)
-    debugger
     const getInitial = async () => {
-      console.log('loading')
       const results = await getData(namespace, states)
 
       for (const [key, data] of Object.entries(results)) {
         const setState = states[key].stateHook[1]
-        console.log(key, data)
         setState(data)
       }
 
@@ -33,10 +29,9 @@ export function useBrowserData (namespace, keys = {}) {
     getInitial()
 
     return () => {
-      console.log('unloading')
       browser.storage.onChanged.removeListener(storageListener)
     }
-  })
+  }, [])
 
   const stateResults = {}
 
@@ -49,7 +44,7 @@ export function useBrowserData (namespace, keys = {}) {
   }
 
   stateResults.loading = loading
-  console.log(stateResults)
+
   return stateResults
 }
 
@@ -78,7 +73,7 @@ function createGet (states = {}) {
   for (const { key, defaultValue } of Object.values(states)) {
     get[key] = defaultValue
   }
-  console.log(get)
+
   return get
 }
 
@@ -96,7 +91,6 @@ function createListener (namespace, states = {}) {
   return (changes, areaName) => {
     for (const [k, { newValue }] of Object.entries(changes)) {
       if (areaName === namespace && Boolean(states[k])) {
-        console.log(`setting ${k} in ${namespace}`)
         states[k].stateHook[1](newValue)
       }
     }

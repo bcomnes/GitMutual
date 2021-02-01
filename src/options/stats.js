@@ -7,7 +7,7 @@ import {
   LAST_UPDATE_ERROR,
   TOKEN_DATA
 } from '../lib/keys.js'
-import { useBrowserData } from '../hooks/use-browser-storage.js'
+import { useLocalData, useSyncData } from '../hooks/use-browser-storage.js'
 
 export const Stats = Component(() => {
   const {
@@ -15,7 +15,7 @@ export const Stats = Component(() => {
     lastUpdateError,
     updateInProgress,
     nextUpdate
-  } = useBrowserData('local', {
+  } = useLocalData({
     lastUpdate: LAST_UPDATE,
     lastUpdateError: {
       key: LAST_UPDATE_ERROR,
@@ -25,7 +25,7 @@ export const Stats = Component(() => {
     nextUpdate: NEXT_UPDATE
   })
 
-  const { automaticDataUpdate, tokenData } = useBrowserData('sync', {
+  const { automaticDataUpdate, tokenData } = useSyncData({
     automaticDataUpdate: {
       key: AUTOMATIC_DATA_UPDATE,
       default: true
