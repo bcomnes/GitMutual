@@ -9,18 +9,3 @@ https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.
 
 Chrome getting started
 https://developer.chrome.com/extensions/getstarted
-
-
-```
-npm install GitMutual
-```
-
-## Usage
-
-``` js
-const GitMutual = require('GitMutual')
-```
-
-## License
-
-MIT
