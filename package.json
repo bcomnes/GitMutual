@@ -28,7 +28,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.29.0",
     "standard": "^16.0.0",
-    "tap": "^14.10.8",
+    "tap": "^15.0.0",
     "postcss": "^8.0.3",
     "postcss-browser-reporter": "^0.6.0",
     "postcss-cli": "^8.0.0",
