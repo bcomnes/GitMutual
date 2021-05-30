@@ -89,7 +89,6 @@ function updateFollowingStatus () {
     }
 
     if (response && response.unfollower === true) {
-      za
       const nicknameNode = document.querySelector('.h-card .p-nickname')
       nicknameNode.innerHTML = `${profileName} <span class="Label Label--danger text-uppercase">Unfollowed you</span>`
     }
