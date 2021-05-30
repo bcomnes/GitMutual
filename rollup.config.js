@@ -10,16 +10,23 @@ function plugins () {
   ]
 }
 
-const OUTPUT_DIR = 'Resources/dist'
+const OUTPUT_DIR = 'dist'
 
 export default [
   {
-    input: ['src/background.js', 'src/popup.js', 'src/options.js', 'src/unfollowers.js', 'src/content-entry.js'],
+    input: [
+      'src/background/background.js',
+      'src/popup/popup.js',
+      'src/options/options.js',
+      'src/unfollowers/unfollowers.js',
+      'src/content/content.js'
+    ],
     plugins: plugins(),
     output: {
       dir: OUTPUT_DIR,
+      entryFileNames: '[name]/[name].js',
       format: 'es',
-      chunkFileNames: '[format]-[name]-[hash].js',
+      chunkFileNames: 'chunks/[format]-[name]-[hash].js',
       sourcemap: true
     }
   }

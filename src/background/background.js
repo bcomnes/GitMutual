@@ -1,14 +1,14 @@
-import { updateAllFollowers } from './lib/update-followers.js'
+import { updateAllFollowers } from '../lib/update-followers.js'
 import {
   AUTOMATIC_DATA_UPDATE,
   UPDATE_INTERVAL,
   UPDATE_IN_PROGRESS,
   UPDATE_ALARM,
   TOKEN_DATA
-} from './lib/keys.js'
-import { profileQuery, userListQuery } from './lib/profile-query.js'
-import { getUnfollowers } from './lib/get-unfollowers.js'
-import { handleUpdateIntervalChange, handleAutomaticDataUpdateChange, handleTokenDataChange } from './lib/handle-settings-change.js'
+} from '../lib/keys.js'
+import { profileQuery, userListQuery } from '../lib/profile-query.js'
+import { getUnfollowers } from '../lib/get-unfollowers.js'
+import { handleUpdateIntervalChange, handleAutomaticDataUpdateChange, handleTokenDataChange } from '../lib/handle-settings-change.js'
 
 window.browser = browser
 window.update = () => updateAllFollowers()

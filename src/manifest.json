@@ -15,27 +15,27 @@
     },
 
     "background": {
-        "page": "dist/background.html"
+        "page": "background/background.html"
     },
 
     "content_scripts": [{
         "js": [
-            "dist/content.js"
+            "content/content.js"
         ],
         "matches": [ "https://github.com/*" ]
     }],
 
     "options_ui": {
-        "page": "dist/options.html"
+        "page": "options/options.html"
     },
 
     "browser_action": {
-        "default_popup": "popup.html",
+        "default_popup": "popup/popup.html",
         "default_icon": {
-            "16": "dist/images/toolbar-icon-16.png",
-            "19": "dist/images/toolbar-icon-19.png",
-            "32": "dist/images/toolbar-icon-32.png",
-            "38": "dist/images/toolbar-icon-38.png"
+            "16": "images/toolbar-icon-16.png",
+            "19": "images/toolbar-icon-19.png",
+            "32": "images/toolbar-icon-32.png",
+            "38": "images/toolbar-icon-38.png"
         }
     },
 
@@ -47,6 +47,6 @@
         "unlimitedStorage"
     ],
 
-    "content_security_policy": "script-src 'self' 'sha256-RWACdigRAw0MmijAnph1444Fv+yuvCV21L87CUdQ4qk='; object-src 'self'"
+    "content_security_policy": "script-src 'self' 'sha256-SZMYQ21BHWJc2KkHBmpEslVYmFT9oSt1BBIPyaWNJy8='; object-src 'self'"
 }
 

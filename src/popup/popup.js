@@ -1,7 +1,7 @@
 import { render, Component, html } from 'uland'
-import { useTokenData } from './hooks/use-token-data.js'
-import { Stats } from './options/stats.js'
-import { useUnfollowers } from './hooks/use-unfollowers.js'
+import { useTokenData } from '../hooks/use-token-data.js'
+import { Stats } from '../options/stats.js'
+import { useUnfollowers } from '../hooks/use-unfollowers.js'
 
 export const Popup = Component(() => {
   const { tokenData, loading: tokenDataLoading } = useTokenData()
@@ -9,7 +9,7 @@ export const Popup = Component(() => {
   async function handleUnfollowerOpen (ev) {
     ev.preventDefault()
 
-    const createData = { url: 'unfollowers.html' }
+    const createData = { url: '/unfollowers/unfollowers.html' }
     await browser.tabs.create(createData)
   }
 

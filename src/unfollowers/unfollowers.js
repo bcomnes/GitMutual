@@ -1,6 +1,6 @@
 import { render, Component, html } from 'uland'
-import { useTokenData } from './hooks/use-token-data.js'
-import { useUnfollowers } from './hooks/use-unfollowers.js'
+import { useTokenData } from '../hooks/use-token-data.js'
+import { useUnfollowers } from '../hooks/use-unfollowers.js'
 
 const Unfollowers = Component(() => {
   const { tokenData } = useTokenData()
