@@ -32,12 +32,15 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   */
   console.log('Received request: ', message)
 
+  // Safari doesn't like it when you return a data containing promise. Stick with sendResponse
+
   /*
     Single profile lookup
   */
   if (message.profileQuery) {
     const { userLogin, targetLogin } = message.profileQuery /* eslint-disable-line camelcase */
-    return profileQuery(userLogin, targetLogin)
+    profileQuery(userLogin, targetLogin).then(sendResponse)
+    return true
   }
 
   /*
@@ -45,14 +48,16 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   */
   if (message.userListQuery) {
     const { loginList, targetLogin } = message.userListQuery /* eslint-disable-line camelcase */
-    return userListQuery(loginList, targetLogin)
+    userListQuery(loginList, targetLogin).then(sendResponse)
+    return true
   }
 
   /*
     Data update request
    */
   if (message.updateData) {
-    return updateAllFollowers()
+    updateAllFollowers().then(sendResponse)
+    return true
   }
 
   /*
@@ -60,7 +65,8 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   */
   if (message.getUnfollowers) {
     const { loginId } = message.getUnfollowers
-    return getUnfollowers(loginId)
+    getUnfollowers(loginId).then(sendResponse)
+    return true
   }
   return false
 })

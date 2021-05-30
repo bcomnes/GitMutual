@@ -9,8 +9,8 @@ export function useUnfollowers (tokenData) {
 
     async function updateUnfollowers () {
       const latestUnfollowers = await browser.runtime.sendMessage({ getUnfollowers: { loginId: tokenData.id } })
-      // Safari swallows null values, so lets fix that here.
-      setUnfollowers(latestUnfollowers === undefined ? [] : latestUnfollowers)
+
+      setUnfollowers(latestUnfollowers)
       setLoading(false)
     }
 

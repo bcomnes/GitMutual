@@ -18,8 +18,7 @@ export default [
       'src/background/background.js',
       'src/popup/popup.js',
       'src/options/options.js',
-      'src/unfollowers/unfollowers.js',
-      'src/content/content.js'
+      'src/unfollowers/unfollowers.js'
     ],
     plugins: plugins(),
     output: {
@@ -28,6 +27,16 @@ export default [
       format: 'es',
       chunkFileNames: 'chunks/[format]-[name]-[hash].js',
       sourcemap: true
+    }
+  },
+  {
+    input: ['src/content/content.js'],
+    plugins: plugins(),
+    output: {
+      dir: OUTPUT_DIR,
+      entryFileNames: '[name]/[name].js',
+      format: 'umd',
+      name: 'gitMutual'
     }
   }
 ]

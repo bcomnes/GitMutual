@@ -17,6 +17,7 @@ export async function profileQuery (userLogin, targetLogin) {
 
   const { [relationhipKey]: relationship } = await browser.storage.local.get(getRelationKey(targetId, userId))
   await browser.storage.local.set({ [LAST_LOGIN]: targetLogin })
+
   return { login: userLogin, ...relationship }
 }
 
