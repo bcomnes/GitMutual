@@ -15,27 +15,27 @@
     },
 
     "background": {
-        "page": "background.html"
+        "page": "dist/background.html"
     },
 
     "content_scripts": [{
         "js": [
-            "content.js"
+            "dist/content.js"
         ],
         "matches": [ "https://github.com/*" ]
     }],
 
     "options_ui": {
-        "page": "options.html"
+        "page": "dist/options.html"
     },
 
     "browser_action": {
         "default_popup": "popup.html",
         "default_icon": {
-            "16": "images/toolbar-icon-16.png",
-            "19": "images/toolbar-icon-19.png",
-            "32": "images/toolbar-icon-32.png",
-            "38": "images/toolbar-icon-38.png"
+            "16": "dist/images/toolbar-icon-16.png",
+            "19": "dist/images/toolbar-icon-19.png",
+            "32": "dist/images/toolbar-icon-32.png",
+            "38": "dist/images/toolbar-icon-38.png"
         }
     },
 

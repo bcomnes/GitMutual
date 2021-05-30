@@ -10,7 +10,7 @@ function plugins () {
   ]
 }
 
-const OUTPUT_DIR = 'dist'
+const OUTPUT_DIR = 'Resources/dist'
 
 export default [
   {
