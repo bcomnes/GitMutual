@@ -14,21 +14,13 @@ const OUTPUT_DIR = 'Resources/dist'
 
 export default [
   {
-    input: ['src/background.js', 'src/popup.js', 'src/options.js', 'src/unfollowers.js'],
+    input: ['src/background.js', 'src/popup.js', 'src/options.js', 'src/unfollowers.js', 'src/content-entry.js'],
     plugins: plugins(),
     output: {
       dir: OUTPUT_DIR,
       format: 'es',
-      chunkFileNames: '[format]-[name]-[hash].js'
-    }
-  },
-  {
-    input: ['src/content.js'],
-    plugins: plugins(),
-    output: {
-      dir: OUTPUT_DIR,
-      format: 'umd',
-      name: 'gitMutual'
+      chunkFileNames: '[format]-[name]-[hash].js',
+      sourcemap: true
     }
   }
 ]
