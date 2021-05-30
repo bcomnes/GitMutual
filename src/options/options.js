@@ -1,8 +1,8 @@
 import { render, html } from 'uland'
 
-import { Stats } from './options/stats.js'
-import { Auth } from './options/auth.js'
-import { Settings } from './options/settings.js'
+import { Stats } from './stats.js'
+import { Auth } from './auth.js'
+import { Settings } from './settings.js'
 
 render(document.querySelector('.gm-options-page'), () => html`
   <h2>Stats</h2>

@@ -13,7 +13,7 @@ export function useTokenData () {
       const {
         [TOKEN_DATA]: tokenData
       } = await browser.storage.sync.get({
-        [TOKEN_DATA]: {}
+        [TOKEN_DATA]: null
       })
 
       setTokenData(tokenData)

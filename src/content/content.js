@@ -47,12 +47,12 @@ if ((tab === 'following' || tab === 'followers') && whoAmI) {
 
       for (const rel of relList.filter(rel => rel.follower)) {
         const node = loginNodeMap[rel.login]
-        if (node) node.innerHTML = `${rel.login} <span class="Label Label--green text-uppercase">Follows you</span>`
+        if (node) node.innerHTML = `${rel.login} <span class="Label Label--success text-uppercase">Follows you</span>`
       }
 
       for (const rel of relList.filter(rel => rel.unfollower)) {
         const node = loginNodeMap[rel.login]
-        if (node) node.innerHTML = `${rel.login} <span class="Label Label--red text-uppercase">Unfollowed you</span>`
+        if (node) node.innerHTML = `${rel.login} <span class="Label Label--danger text-uppercase">Unfollowed you</span>`
       }
     })
   }
@@ -67,7 +67,7 @@ function getProfileName () {
 }
 
 function gatherProfileListNodes () {
-  return document.querySelectorAll('.page-profile a span.link-gray')
+  return document.querySelectorAll('.page-profile a[data-hovercard-type="user"] .Link--secondary')
 }
 
 function gatherProfileListNames () {
@@ -79,16 +79,18 @@ function gatherProfileListNames () {
   }
 }
 
+// See https://primer.style/css/components/labels
 function updateFollowingStatus () {
   browser.runtime.sendMessage({ profileQuery: { userLogin: profileName, targetLogin: whoAmI } }).then((response) => {
+    console.log(response)
     if (response && response.follower === true) {
       const nicknameNode = document.querySelector('.h-card .p-nickname')
-      nicknameNode.innerHTML = `${profileName} <span class="Label Label--green text-uppercase">Follows you</span>`
+      nicknameNode.innerHTML = `${profileName} <span class="Label Label--success text-uppercase">Follows you</span>`
     }
 
     if (response && response.unfollower === true) {
       const nicknameNode = document.querySelector('.h-card .p-nickname')
-      nicknameNode.innerHTML = `${profileName} <span class="Label Label--red text-uppercase">Unfollowed you</span>`
+      nicknameNode.innerHTML = `${profileName} <span class="Label Label--danger text-uppercase">Unfollowed you</span>`
     }
   })
 }

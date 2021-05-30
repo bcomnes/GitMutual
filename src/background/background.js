@@ -1,14 +1,14 @@
-import { updateAllFollowers } from './lib/update-followers.js'
+import { updateAllFollowers } from '../lib/update-followers.js'
 import {
   AUTOMATIC_DATA_UPDATE,
   UPDATE_INTERVAL,
   UPDATE_IN_PROGRESS,
   UPDATE_ALARM,
   TOKEN_DATA
-} from './lib/keys.js'
-import { profileQuery, userListQuery } from './lib/profile-query.js'
-import { getUnfollowers } from './lib/get-unfollowers.js'
-import { handleUpdateIntervalChange, handleAutomaticDataUpdateChange, handleTokenDataChange } from './lib/handle-settings-change.js'
+} from '../lib/keys.js'
+import { profileQuery, userListQuery } from '../lib/profile-query.js'
+import { getUnfollowers } from '../lib/get-unfollowers.js'
+import { handleUpdateIntervalChange, handleAutomaticDataUpdateChange, handleTokenDataChange } from '../lib/handle-settings-change.js'
 
 window.browser = browser
 window.update = () => updateAllFollowers()
@@ -32,12 +32,15 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   */
   console.log('Received request: ', message)
 
+  // Safari doesn't like it when you return a data containing promise. Stick with sendResponse
+
   /*
     Single profile lookup
   */
   if (message.profileQuery) {
     const { userLogin, targetLogin } = message.profileQuery /* eslint-disable-line camelcase */
-    return profileQuery(userLogin, targetLogin)
+    profileQuery(userLogin, targetLogin).then(sendResponse)
+    return true
   }
 
   /*
@@ -45,14 +48,16 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   */
   if (message.userListQuery) {
     const { loginList, targetLogin } = message.userListQuery /* eslint-disable-line camelcase */
-    return userListQuery(loginList, targetLogin)
+    userListQuery(loginList, targetLogin).then(sendResponse)
+    return true
   }
 
   /*
     Data update request
    */
   if (message.updateData) {
-    return updateAllFollowers()
+    updateAllFollowers().then(sendResponse)
+    return true
   }
 
   /*
@@ -60,8 +65,10 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   */
   if (message.getUnfollowers) {
     const { loginId } = message.getUnfollowers
-    return getUnfollowers(loginId)
+    getUnfollowers(loginId).then(sendResponse)
+    return true
   }
+  return false
 })
 
 browser.storage.onChanged.addListener(async (changes, areaName) => {
