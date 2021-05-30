@@ -16,14 +16,28 @@
 		BAEA2FCD2662EC2D00A7AA13 /* GitMutual Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BAEA2FCC2662EC2D00A7AA13 /* GitMutual Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAEA2FD22662EC2D00A7AA13 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAEA2FD12662EC2D00A7AA13 /* Cocoa.framework */; };
 		BAEA2FD52662EC2D00A7AA13 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEA2FD42662EC2D00A7AA13 /* SafariWebExtensionHandler.swift */; };
-		BAEA2FD82662EC2D00A7AA13 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = BAEA2FD72662EC2D00A7AA13 /* _locales */; };
-		BAEA2FDA2662EC2D00A7AA13 /* images in Resources */ = {isa = PBXBuildFile; fileRef = BAEA2FD92662EC2D00A7AA13 /* images */; };
-		BAEA2FDC2662EC2D00A7AA13 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BAEA2FDB2662EC2D00A7AA13 /* manifest.json */; };
-		BAEA2FDE2662EC2D00A7AA13 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = BAEA2FDD2662EC2D00A7AA13 /* background.js */; };
-		BAEA2FE02662EC2D00A7AA13 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = BAEA2FDF2662EC2D00A7AA13 /* content.js */; };
-		BAEA2FE22662EC2D00A7AA13 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = BAEA2FE12662EC2D00A7AA13 /* popup.html */; };
-		BAEA2FE42662EC2D00A7AA13 /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = BAEA2FE32662EC2D00A7AA13 /* popup.css */; };
-		BAEA2FE62662EC2D00A7AA13 /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = BAEA2FE52662EC2D00A7AA13 /* popup.js */; };
+		BAFF6BDF2662F37E0020E684 /* unfollowers.html in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BB82662F37E0020E684 /* unfollowers.html */; };
+		BAFF6BE12662F37E0020E684 /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BBA2662F37E0020E684 /* popup.js */; };
+		BAFF6BE32662F37E0020E684 /* unfollowers.js in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BBD2662F37E0020E684 /* unfollowers.js */; };
+		BAFF6BE42662F37E0020E684 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BBE2662F37E0020E684 /* background.js */; };
+		BAFF6BEF2662F37E0020E684 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BCB2662F37E0020E684 /* popup.html */; };
+		BAFF6BF02662F37E0020E684 /* options.js in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BCC2662F37E0020E684 /* options.js */; };
+		BAFF6BF32662F37E0020E684 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BCF2662F37E0020E684 /* manifest.json */; };
+		BAFF6BF62662F37E0020E684 /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BD42662F37E0020E684 /* options.html */; };
+		BAFF6BF72662F37E0020E684 /* background.html in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BD52662F37E0020E684 /* background.html */; };
+		BAFF6BF82662F37E0020E684 /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BD62662F37E0020E684 /* popup.css */; };
+		BAFF6BFA2662F37E0020E684 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BDA2662F37E0020E684 /* content.js */; };
+		BAFF6BFB2662F37E0020E684 /* unfollowers.css in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BDB2662F37E0020E684 /* unfollowers.css */; };
+		BAFF6BFC2662F37E0020E684 /* options.css in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6BDC2662F37E0020E684 /* options.css */; };
+		BAFF6C5D2662F4FB0020E684 /* images in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6C5A2662F4FB0020E684 /* images */; };
+		BAFF6C5E2662F4FB0020E684 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6C5B2662F4FB0020E684 /* _locales */; };
+		BAFF6C5F2662F4FB0020E684 /* polyfills in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6C5C2662F4FB0020E684 /* polyfills */; };
+		BAFF6C662662F62B0020E684 /* es-keys.js in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6C602662F62B0020E684 /* es-keys.js */; };
+		BAFF6C682662F62B0020E684 /* es-use-token-data.js in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6C622662F62B0020E684 /* es-use-token-data.js */; };
+		BAFF6C692662F62B0020E684 /* es-_commonjsHelpers.js in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6C632662F62B0020E684 /* es-_commonjsHelpers.js */; };
+		BAFF6C6A2662F62B0020E684 /* es-use-unfollowers.js in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6C642662F62B0020E684 /* es-use-unfollowers.js */; };
+		BAFF6C6B2662F62B0020E684 /* es-index.js in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6C652662F62B0020E684 /* es-index.js */; };
+		BAFF6C6D2662FAB40020E684 /* es-index2.js in Resources */ = {isa = PBXBuildFile; fileRef = BAFF6C6C2662FAB40020E684 /* es-index2.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +61,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = BAEA2FCB2662EC2D00A7AA13;
 			remoteInfo = "GitMutual Extension";
+		};
+		BAFF6B842662F3240020E684 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BAEA2F9C2662EC2B00A7AA13 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BA6560AB2662F050008C9EF2;
+			remoteInfo = "npm install";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -81,16 +102,34 @@
 		BAEA2FCC2662EC2D00A7AA13 /* GitMutual Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "GitMutual Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAEA2FD12662EC2D00A7AA13 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		BAEA2FD42662EC2D00A7AA13 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
-		BAEA2FD72662EC2D00A7AA13 /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; path = _locales; sourceTree = "<group>"; };
-		BAEA2FD92662EC2D00A7AA13 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
-		BAEA2FDB2662EC2D00A7AA13 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		BAEA2FDD2662EC2D00A7AA13 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = background.js; sourceTree = "<group>"; };
-		BAEA2FDF2662EC2D00A7AA13 /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = content.js; sourceTree = "<group>"; };
-		BAEA2FE12662EC2D00A7AA13 /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = popup.html; sourceTree = "<group>"; };
-		BAEA2FE32662EC2D00A7AA13 /* popup.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = popup.css; sourceTree = "<group>"; };
-		BAEA2FE52662EC2D00A7AA13 /* popup.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = popup.js; sourceTree = "<group>"; };
 		BAEA2FE72662EC2D00A7AA13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BAEA2FE82662EC2D00A7AA13 /* GitMutual_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GitMutual_Extension.entitlements; sourceTree = "<group>"; };
+		BAEA2FFE2662EF1C00A7AA13 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
+		BAFF6BB82662F37E0020E684 /* unfollowers.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = unfollowers.html; sourceTree = "<group>"; };
+		BAFF6BBA2662F37E0020E684 /* popup.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = popup.js; sourceTree = "<group>"; };
+		BAFF6BBB2662F37E0020E684 /* options.css.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = options.css.map; sourceTree = "<group>"; };
+		BAFF6BBD2662F37E0020E684 /* unfollowers.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = unfollowers.js; sourceTree = "<group>"; };
+		BAFF6BBE2662F37E0020E684 /* background.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = background.js; sourceTree = "<group>"; };
+		BAFF6BBF2662F37E0020E684 /* unfollowers.css.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = unfollowers.css.map; sourceTree = "<group>"; };
+		BAFF6BCB2662F37E0020E684 /* popup.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = popup.html; sourceTree = "<group>"; };
+		BAFF6BCC2662F37E0020E684 /* options.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = options.js; sourceTree = "<group>"; };
+		BAFF6BCF2662F37E0020E684 /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		BAFF6BD42662F37E0020E684 /* options.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = options.html; sourceTree = "<group>"; };
+		BAFF6BD52662F37E0020E684 /* background.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = background.html; sourceTree = "<group>"; };
+		BAFF6BD62662F37E0020E684 /* popup.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = popup.css; sourceTree = "<group>"; };
+		BAFF6BDA2662F37E0020E684 /* content.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = content.js; sourceTree = "<group>"; };
+		BAFF6BDB2662F37E0020E684 /* unfollowers.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = unfollowers.css; sourceTree = "<group>"; };
+		BAFF6BDC2662F37E0020E684 /* options.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = options.css; sourceTree = "<group>"; };
+		BAFF6BDD2662F37E0020E684 /* popup.css.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = popup.css.map; sourceTree = "<group>"; };
+		BAFF6C5A2662F4FB0020E684 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
+		BAFF6C5B2662F4FB0020E684 /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; path = _locales; sourceTree = "<group>"; };
+		BAFF6C5C2662F4FB0020E684 /* polyfills */ = {isa = PBXFileReference; lastKnownFileType = folder; path = polyfills; sourceTree = "<group>"; };
+		BAFF6C602662F62B0020E684 /* es-keys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "es-keys.js"; sourceTree = "<group>"; };
+		BAFF6C622662F62B0020E684 /* es-use-token-data.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "es-use-token-data.js"; sourceTree = "<group>"; };
+		BAFF6C632662F62B0020E684 /* es-_commonjsHelpers.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "es-_commonjsHelpers.js"; sourceTree = "<group>"; };
+		BAFF6C642662F62B0020E684 /* es-use-unfollowers.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "es-use-unfollowers.js"; sourceTree = "<group>"; };
+		BAFF6C652662F62B0020E684 /* es-index.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "es-index.js"; sourceTree = "<group>"; };
+		BAFF6C6C2662FAB40020E684 /* es-index2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "es-index2.js"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +168,7 @@
 		BAEA2F9B2662EC2B00A7AA13 = {
 			isa = PBXGroup;
 			children = (
+				BAEA2FFE2662EF1C00A7AA13 /* src */,
 				BAEA2FA62662EC2B00A7AA13 /* GitMutual */,
 				BAEA2FB92662EC2D00A7AA13 /* GitMutualTests */,
 				BAEA2FC42662EC2D00A7AA13 /* GitMutualUITests */,
@@ -194,31 +234,65 @@
 		BAEA2FD32662EC2D00A7AA13 /* GitMutual Extension */ = {
 			isa = PBXGroup;
 			children = (
+				BAFF6BB62662F37E0020E684 /* dist */,
 				BAEA2FD42662EC2D00A7AA13 /* SafariWebExtensionHandler.swift */,
 				BAEA2FE72662EC2D00A7AA13 /* Info.plist */,
 				BAEA2FE82662EC2D00A7AA13 /* GitMutual_Extension.entitlements */,
-				BAEA2FD62662EC2D00A7AA13 /* Resources */,
 			);
 			name = "GitMutual Extension";
 			path = "safari/GitMutual Extension";
 			sourceTree = "<group>";
 		};
-		BAEA2FD62662EC2D00A7AA13 /* Resources */ = {
+		BAFF6BB62662F37E0020E684 /* dist */ = {
 			isa = PBXGroup;
 			children = (
-				BAEA2FD72662EC2D00A7AA13 /* _locales */,
-				BAEA2FD92662EC2D00A7AA13 /* images */,
-				BAEA2FDB2662EC2D00A7AA13 /* manifest.json */,
-				BAEA2FDD2662EC2D00A7AA13 /* background.js */,
-				BAEA2FDF2662EC2D00A7AA13 /* content.js */,
-				BAEA2FE12662EC2D00A7AA13 /* popup.html */,
-				BAEA2FE32662EC2D00A7AA13 /* popup.css */,
-				BAEA2FE52662EC2D00A7AA13 /* popup.js */,
+				BAFF6C6C2662FAB40020E684 /* es-index2.js */,
+				BAFF6C632662F62B0020E684 /* es-_commonjsHelpers.js */,
+				BAFF6C652662F62B0020E684 /* es-index.js */,
+				BAFF6C602662F62B0020E684 /* es-keys.js */,
+				BAFF6C622662F62B0020E684 /* es-use-token-data.js */,
+				BAFF6C642662F62B0020E684 /* es-use-unfollowers.js */,
+				BAFF6C5B2662F4FB0020E684 /* _locales */,
+				BAFF6C5A2662F4FB0020E684 /* images */,
+				BAFF6C5C2662F4FB0020E684 /* polyfills */,
+				BAFF6BB82662F37E0020E684 /* unfollowers.html */,
+				BAFF6BBA2662F37E0020E684 /* popup.js */,
+				BAFF6BBB2662F37E0020E684 /* options.css.map */,
+				BAFF6BBD2662F37E0020E684 /* unfollowers.js */,
+				BAFF6BBE2662F37E0020E684 /* background.js */,
+				BAFF6BBF2662F37E0020E684 /* unfollowers.css.map */,
+				BAFF6BCB2662F37E0020E684 /* popup.html */,
+				BAFF6BCC2662F37E0020E684 /* options.js */,
+				BAFF6BCF2662F37E0020E684 /* manifest.json */,
+				BAFF6BD42662F37E0020E684 /* options.html */,
+				BAFF6BD52662F37E0020E684 /* background.html */,
+				BAFF6BD62662F37E0020E684 /* popup.css */,
+				BAFF6BDA2662F37E0020E684 /* content.js */,
+				BAFF6BDB2662F37E0020E684 /* unfollowers.css */,
+				BAFF6BDC2662F37E0020E684 /* options.css */,
+				BAFF6BDD2662F37E0020E684 /* popup.css.map */,
 			);
-			path = Resources;
-			sourceTree = "<group>";
+			path = dist;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		BA6560AB2662F050008C9EF2 /* npm install */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = install;
+			buildConfigurationList = BA6560AC2662F050008C9EF2 /* Build configuration list for PBXLegacyTarget "npm install" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/local/bin/npm;
+			buildWorkingDirectory = /Users/bret/Developer/GitMutual;
+			dependencies = (
+			);
+			name = "npm install";
+			passBuildSettingsInEnvironment = 1;
+			productName = "npm install";
+		};
+/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		BAEA2FA32662EC2B00A7AA13 /* GitMutual */ = {
@@ -287,6 +361,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				BAFF6B852662F3240020E684 /* PBXTargetDependency */,
 			);
 			name = "GitMutual Extension";
 			productName = "GitMutual Extension";
@@ -302,6 +377,9 @@
 				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					BA6560AB2662F050008C9EF2 = {
+						CreatedOnToolsVersion = 12.5;
+					};
 					BAEA2FA32662EC2B00A7AA13 = {
 						CreatedOnToolsVersion = 12.5;
 					};
@@ -335,6 +413,7 @@
 				BAEA2FB52662EC2D00A7AA13 /* GitMutualTests */,
 				BAEA2FC02662EC2D00A7AA13 /* GitMutualUITests */,
 				BAEA2FCB2662EC2D00A7AA13 /* GitMutual Extension */,
+				BA6560AB2662F050008C9EF2 /* npm install */,
 			);
 		};
 /* End PBXProject section */
@@ -367,14 +446,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAEA2FDE2662EC2D00A7AA13 /* background.js in Resources */,
-				BAEA2FE42662EC2D00A7AA13 /* popup.css in Resources */,
-				BAEA2FE22662EC2D00A7AA13 /* popup.html in Resources */,
-				BAEA2FDA2662EC2D00A7AA13 /* images in Resources */,
-				BAEA2FDC2662EC2D00A7AA13 /* manifest.json in Resources */,
-				BAEA2FD82662EC2D00A7AA13 /* _locales in Resources */,
-				BAEA2FE02662EC2D00A7AA13 /* content.js in Resources */,
-				BAEA2FE62662EC2D00A7AA13 /* popup.js in Resources */,
+				BAFF6C662662F62B0020E684 /* es-keys.js in Resources */,
+				BAFF6BE42662F37E0020E684 /* background.js in Resources */,
+				BAFF6BF02662F37E0020E684 /* options.js in Resources */,
+				BAFF6C682662F62B0020E684 /* es-use-token-data.js in Resources */,
+				BAFF6BFA2662F37E0020E684 /* content.js in Resources */,
+				BAFF6BF72662F37E0020E684 /* background.html in Resources */,
+				BAFF6C6D2662FAB40020E684 /* es-index2.js in Resources */,
+				BAFF6C6A2662F62B0020E684 /* es-use-unfollowers.js in Resources */,
+				BAFF6BFB2662F37E0020E684 /* unfollowers.css in Resources */,
+				BAFF6BDF2662F37E0020E684 /* unfollowers.html in Resources */,
+				BAFF6BE12662F37E0020E684 /* popup.js in Resources */,
+				BAFF6C5F2662F4FB0020E684 /* polyfills in Resources */,
+				BAFF6C5D2662F4FB0020E684 /* images in Resources */,
+				BAFF6BF32662F37E0020E684 /* manifest.json in Resources */,
+				BAFF6C692662F62B0020E684 /* es-_commonjsHelpers.js in Resources */,
+				BAFF6BEF2662F37E0020E684 /* popup.html in Resources */,
+				BAFF6BF82662F37E0020E684 /* popup.css in Resources */,
+				BAFF6BF62662F37E0020E684 /* options.html in Resources */,
+				BAFF6BE32662F37E0020E684 /* unfollowers.js in Resources */,
+				BAFF6C6B2662F62B0020E684 /* es-index.js in Resources */,
+				BAFF6C5E2662F4FB0020E684 /* _locales in Resources */,
+				BAFF6BFC2662F37E0020E684 /* options.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +525,11 @@
 			target = BAEA2FCB2662EC2D00A7AA13 /* GitMutual Extension */;
 			targetProxy = BAEA2FCE2662EC2D00A7AA13 /* PBXContainerItemProxy */;
 		};
+		BAFF6B852662F3240020E684 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BA6560AB2662F050008C9EF2 /* npm install */;
+			targetProxy = BAFF6B842662F3240020E684 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -446,6 +544,33 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		BA6560AD2662F050008C9EF2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = MV52DXHA2M;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BA6560AE2662F050008C9EF2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MV52DXHA2M;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		BAEA2FE92662EC2D00A7AA13 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -564,6 +689,7 @@
 		BAEA2FEC2662EC2D00A7AA13 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				CODE_SIGN_ENTITLEMENTS = "safari/GitMutual Extension/GitMutual_Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MV52DXHA2M;
@@ -585,6 +711,7 @@
 		BAEA2FED2662EC2D00A7AA13 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				CODE_SIGN_ENTITLEMENTS = "safari/GitMutual Extension/GitMutual_Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MV52DXHA2M;
@@ -736,6 +863,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BA6560AC2662F050008C9EF2 /* Build configuration list for PBXLegacyTarget "npm install" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA6560AD2662F050008C9EF2 /* Debug */,
+				BA6560AE2662F050008C9EF2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BAEA2F9F2662EC2B00A7AA13 /* Build configuration list for PBXProject "GitMutual" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
