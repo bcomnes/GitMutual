@@ -62,6 +62,7 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const { loginId } = message.getUnfollowers
     return getUnfollowers(loginId)
   }
+  return false
 })
 
 browser.storage.onChanged.addListener(async (changes, areaName) => {

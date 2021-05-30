@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'uland'
 
 export function useUnfollowers (tokenData) {
-  const [unfollowers, setUnfollowers] = useState(null)
+  const [unfollowers, setUnfollowers] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -9,7 +9,8 @@ export function useUnfollowers (tokenData) {
 
     async function updateUnfollowers () {
       const latestUnfollowers = await browser.runtime.sendMessage({ getUnfollowers: { loginId: tokenData.id } })
-      setUnfollowers(latestUnfollowers)
+      // Safari swallows null values, so lets fix that here.
+      setUnfollowers(latestUnfollowers === undefined ? [] : latestUnfollowers)
       setLoading(false)
     }
 

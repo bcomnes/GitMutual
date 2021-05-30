@@ -1,4 +1,6 @@
 import { render, Component, html } from 'uland'
+import get from 'lodash.get'
+
 import { useTokenData } from '../hooks/use-token-data.js'
 import { Stats } from '../options/stats.js'
 import { useUnfollowers } from '../hooks/use-unfollowers.js'
@@ -30,10 +32,10 @@ export const Popup = Component(() => {
       </button>
     </div>`
   }
-  console.log(unfollowers)
+
   return html`
   <div>Logged in as: ${tokenData.login}</div>
-  <div>Unfollowers: ${unfollowers.length}</div>
+  <div>Unfollowers: ${get(unfollowers, 'length', '—')}</div>
   ${Stats()}
   <button onclick=${handleUnfollowerOpen}>
     Unfollowers
