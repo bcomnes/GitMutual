@@ -1,6 +1,6 @@
 /* eslint-env browser */
 import { Octokit } from '@octokit/rest'
-import { clientId, userAgent } from './keys.js'
+import { clientId, userAgent, BACKUP_GIST_DESCRIPTION, BACKUP_GIST_DATA_FILE_NAME } from './keys.js'
 
 const defaultRequestOpts = {
   headers: {
@@ -11,7 +11,7 @@ const defaultRequestOpts = {
 }
 
 export async function getDeviceCode () {
-  const deviceCode = await fetch(`https://github.com/login/device/code?client_id=${clientId}`, defaultRequestOpts).then(req => req.json())
+  const deviceCode = await fetch(`https://github.com/login/device/code?client_id=${clientId}&scope=gist`, defaultRequestOpts).then(req => req.json())
   if (deviceCode.error) {
     let error
     switch (deviceCode.error) {
@@ -84,12 +84,39 @@ async function supplementUserData (tokenData) {
   const token = tokenData.access_token
   const octokit = new Octokit({ auth: token, userAgent })
   const { data: currentUser } = await octokit.users.getAuthenticated()
+  let backupGistId
+
+  // Look for data backup Gist
+  for await (const response of octokit.paginate.iterator(octokit.gists.list, { per_page: 100 })) {
+    for (const gist of response.data) {
+      if (gist.description === BACKUP_GIST_DESCRIPTION) {
+        backupGistId = gist.id
+        break
+      }
+    }
+    if (backupGistId) break
+  }
+
+  if (!backupGistId) {
+    // Create one if you dont find it.
+    console.log('creating backup GIST')
+    await octokit.rest.gists.create({
+      description: BACKUP_GIST_DESCRIPTION,
+      files: {
+        [BACKUP_GIST_DATA_FILE_NAME]: {
+          content: '{}\n'
+        }
+      },
+      public: false
+    })
+  }
 
   return {
     token,
     email: currentUser.email,
     login: currentUser.login,
-    id: currentUser.id
+    id: currentUser.id,
+    gist: backupGistId
   }
 }
 

@@ -43,3 +43,6 @@ export function getAlarmKey (alarmKey) {
 }
 
 export const UPDATE_ALARM = getAlarmKey('auto-data-updates')
+
+export const BACKUP_GIST_DESCRIPTION = 'GitMutual Data Backup. (DO NOT MODIFY)'
+export const BACKUP_GIST_DATA_FILE_NAME = 'GitMutualData.json'
