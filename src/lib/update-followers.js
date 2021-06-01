@@ -13,7 +13,9 @@ import {
   TOKEN_DATA,
   UPDATE_ALARM,
   AUTOMATIC_DATA_UPDATE,
-  UPDATE_INTERVAL
+  UPDATE_INTERVAL,
+  BACKUP_GIST_DESCRIPTION,
+  BACKUP_GIST_DATA_FILE_NAME
 } from './keys.js'
 import { splitObject } from './split-object.js'
 import browser from 'webextension-polyfill'
@@ -40,10 +42,7 @@ export async function updateAllFollowers () {
   const updateTime = new Date()
 
   try {
-    for (const token of [tokenData.token]) { // The idea was to maybe support multi-login
-      await updateFollowers(token, updateTime)
-    }
-
+    await updateFollowers(tokenData.token, updateTime)
     await browser.storage.local.set({
       [LAST_UPDATE_ERROR]: {
         message: null,
@@ -78,6 +77,11 @@ export async function updateAllFollowers () {
       console.log(`New alarm set for ${nextUpdate.toLocaleString()}`)
     } else {
       await browser.storage.local.set({ [NEXT_UPDATE]: null })
+    }
+    try {
+      await backupData(tokenData)
+    } catch (e) {
+      console.error(e)
     }
   }
 }
@@ -198,4 +202,21 @@ function difference (setA, setB) {
     _difference.delete(elem)
   }
   return _difference
+}
+
+async function backupData (tokenData) {
+  const localData = await browser.storage.local.get()
+  const octokit = new Octokit({ auth: tokenData.token, userAgent })
+  console.log('Backing up data...')
+  await octokit.rest.gists.update({
+    gist_id: tokenData.gist,
+    description: BACKUP_GIST_DESCRIPTION,
+    files: {
+      [BACKUP_GIST_DATA_FILE_NAME]: {
+        content: JSON.stringify(localData, null, '  ')
+      }
+    },
+    public: false
+  })
+  console.log('Data backed up.')
 }

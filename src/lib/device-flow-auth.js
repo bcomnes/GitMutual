@@ -1,5 +1,6 @@
 /* eslint-env browser */
 import { Octokit } from '@octokit/rest'
+import get from 'lodash.get'
 import { clientId, userAgent, BACKUP_GIST_DESCRIPTION, BACKUP_GIST_DATA_FILE_NAME } from './keys.js'
 
 const defaultRequestOpts = {
@@ -84,13 +85,16 @@ async function supplementUserData (tokenData) {
   const token = tokenData.access_token
   const octokit = new Octokit({ auth: token, userAgent })
   const { data: currentUser } = await octokit.users.getAuthenticated()
+
   let backupGistId
+  let backupGistData
 
   // Look for data backup Gist
   for await (const response of octokit.paginate.iterator(octokit.gists.list, { per_page: 100 })) {
     for (const gist of response.data) {
       if (gist.description === BACKUP_GIST_DESCRIPTION) {
         backupGistId = gist.id
+        backupGistData = gist
         break
       }
     }
@@ -109,6 +113,16 @@ async function supplementUserData (tokenData) {
       },
       public: false
     })
+  }
+
+  if (backupGistData) {
+    try {
+      const dataURL = get(backupGistData, `files['${BACKUP_GIST_DATA_FILE_NAME}'].raw_url`)
+      const backupData = await fetch(dataURL).then(res => res.json())
+      browser.storage.local.set(backupData)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return {

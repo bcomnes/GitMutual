@@ -46,4 +46,6 @@ export async function handleTokenDataChange (newTokenData) {
       await browser.storage.local.set({ [NEXT_UPDATE]: null })
     }
   }
+
+  if (!newTokenData) await browser.storage.local.clear()
 }
