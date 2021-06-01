@@ -21,9 +21,8 @@ export const Auth = Component(() => {
 
   async function handleLogOut (ev) {
     if (ev) ev.preventDefault()
-    await browser.storage.sync.set({
-      [TOKEN_DATA]: null
-    })
+    console.log('logging out')
+    await browser.storage.sync.remove(TOKEN_DATA)
   }
 
   async function handleLogInInit (ev) {
