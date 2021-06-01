@@ -1,16 +1,23 @@
 /* eslint-env browser */
 import { Component, html, useState } from 'uland'
 import {
-  TOKEN_DATA
+  TOKEN_DATA,
+  UPDATE_IN_PROGRESS
 } from '../lib/keys.js'
 import { getDeviceCode, pollDeviceCode } from '../lib/device-flow-auth.js'
 import { useTokenData } from '../hooks/use-token-data.js'
+import { useLocalData } from '../hooks/use-browser-storage.js'
 
 export const Auth = Component(() => {
   const [authSession, setAuthSession] = useState(null)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
   const { tokenData } = useTokenData()
+  const {
+    updateInProgress
+  } = useLocalData({
+    updateInProgress: UPDATE_IN_PROGRESS
+  })
 
   async function handleLogOut (ev) {
     if (ev) ev.preventDefault()
@@ -63,7 +70,7 @@ export const Auth = Component(() => {
                   ${tokenData.id}
                 </dd>
               </dl>
-              <input type="submit" value="Log out">
+              <input disabled="${updateInProgress ? '' : null}" type="submit" value="Log out">
             </fieldset>
           </form>
         `

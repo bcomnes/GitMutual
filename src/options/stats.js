@@ -1,4 +1,5 @@
 import { Component, html } from 'uland'
+import get from 'lodash.get'
 import {
   AUTOMATIC_DATA_UPDATE,
   UPDATE_IN_PROGRESS,
@@ -54,7 +55,7 @@ export const Stats = Component(() => {
           <span id="last-update-error">
             ${updateInProgress
               ? ''
-              : lastUpdateError.message
+              : get(lastUpdateError, 'message')
                 ? ` (Error: ${lastUpdateError.message} on ${(new Date(lastUpdateError.timestamp)).toLocaleString()})`
                 : ''
             }
