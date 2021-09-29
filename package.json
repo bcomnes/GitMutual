@@ -29,7 +29,7 @@
     "npm-run-all2": "^5.0.0",
     "postcss": "^8.0.3",
     "postcss-browser-reporter": "^0.6.0",
-    "postcss-cli": "^8.0.0",
+    "postcss-cli": "^9.0.1",
     "postcss-import": "^14.0.0",
     "postcss-nesting": "^8.0.1",
     "postcss-reporter": "^7.0.0",
