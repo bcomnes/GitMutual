@@ -76,7 +76,7 @@ export async function updateAllFollowers () {
       await browser.storage.local.set({ [NEXT_UPDATE]: nextUpdate.toISOString() })
       console.log(`New alarm set for ${nextUpdate.toLocaleString()}`)
     } else {
-      await browser.storage.local.set({ [NEXT_UPDATE]: null })
+      await browser.storage.sync.remove(NEXT_UPDATE)
     }
     try {
       await backupData(tokenData)
