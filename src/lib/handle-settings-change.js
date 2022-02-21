@@ -28,7 +28,7 @@ export async function handleAutomaticDataUpdateChange (newAutomaticUpdateSetting
     await browser.storage.local.set({ [NEXT_UPDATE]: nextUpdate.toISOString() })
   } else {
     browser.alarms.clear(UPDATE_ALARM)
-    await browser.storage.local.set({ [NEXT_UPDATE]: null })
+    await browser.storage.sync.remove(NEXT_UPDATE)
   }
 }
 
@@ -43,7 +43,7 @@ export async function handleTokenDataChange (newTokenData) {
       await browser.storage.local.set({ [NEXT_UPDATE]: nextUpdate.toISOString() })
     } else {
       browser.alarms.clear(UPDATE_ALARM)
-      await browser.storage.local.set({ [NEXT_UPDATE]: null })
+      await browser.storage.sync.remove(NEXT_UPDATE)
     }
   }
 
