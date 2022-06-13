@@ -26,7 +26,7 @@
     "gh-release": "^6.0.0",
     "mine.css": "^7.0.0",
     "mkdirp": "^1.0.4",
-    "npm-run-all2": "^5.0.0",
+    "npm-run-all2": "^6.0.0",
     "postcss": "^8.0.3",
     "postcss-browser-reporter": "^0.6.0",
     "postcss-cli": "^9.1.0",
