@@ -25,7 +25,7 @@
     "cpx2": "^4.1.2",
     "gh-release": "^7.0.0",
     "mine.css": "^7.0.0",
-    "mkdirp": "^1.0.4",
+    "mkdirp": "^2.0.0",
     "npm-run-all2": "^6.0.0",
     "postcss": "^8.0.3",
     "postcss-browser-reporter": "^0.6.0",
