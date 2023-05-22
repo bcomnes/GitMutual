@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@octokit/plugin-retry": "^4.0.3",
-    "@octokit/plugin-throttling": "^5.0.1",
+    "@octokit/plugin-throttling": "^6.0.0",
     "@octokit/rest": "^19.0.3",
     "lodash.get": "^4.4.2",
     "plain-tag": "^0.1.3",
