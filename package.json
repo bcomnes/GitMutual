@@ -26,7 +26,7 @@
     "postcss-browser-reporter": "^0.6.0",
     "postcss-cli": "^10.0.0",
     "postcss-import": "^15.0.0",
-    "postcss-nesting": "^11.0.1",
+    "postcss-nesting": "^12.0.0",
     "postcss-reporter": "^7.0.0",
     "postcss-url": "^10.0.0",
     "standard": "^17.0.0",
