@@ -30,7 +30,7 @@
     "postcss-reporter": "^7.0.0",
     "postcss-url": "^10.0.0",
     "standard": "^17.0.0",
-    "tap": "^16.0.0"
+    "tap": "^18.1.5"
   },
   "homepage": "https://github.com/bcomnes/GitMutual",
   "keywords": [],
