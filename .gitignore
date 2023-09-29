@@ -4,3 +4,5 @@ sandbox.js
 package-lock.json
 dist
 devKey.js
+.tap
+
