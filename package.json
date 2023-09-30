@@ -30,7 +30,7 @@
     "postcss-reporter": "^7.0.0",
     "postcss-url": "^10.0.0",
     "standard": "^17.0.0",
-    "tap": "^16.0.0"
+    "tap": "^18.3.0"
   },
   "homepage": "https://github.com/bcomnes/GitMutual",
   "keywords": [],
@@ -76,5 +76,15 @@
   "funding": {
     "type": "individual",
     "url": "https://github.com/sponsors/bcomnes"
+  },
+  "tap": {
+    "serial": [],
+    "typecheck": false,
+    "allow-incomplete-coverage": true,
+    "allow-empty-coverage": true,
+    "coverage-report": [
+      "text",
+      "lcovonly"
+    ]
   }
 }
