@@ -21,7 +21,7 @@
     "esbuild": "^0.24.0",
     "gh-release": "^7.0.0",
     "mine.css": "^10.0.0",
-    "npm-run-all2": "^6.0.0",
+    "npm-run-all2": "^7.0.1",
     "postcss": "^8.0.3",
     "postcss-browser-reporter": "^0.7.0",
     "postcss-cli": "^11.0.0",
