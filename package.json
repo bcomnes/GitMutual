@@ -18,7 +18,7 @@
     "auto-changelog": "^2.2.0",
     "autoprefixer": "^10.0.0",
     "cpx2": "^8.0.0",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.25.0",
     "gh-release": "^7.0.0",
     "mine.css": "^10.0.0",
     "npm-run-all2": "^7.0.1",
